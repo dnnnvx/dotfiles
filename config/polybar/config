@@ -1,0 +1,242 @@
+[settings]
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+screenchange-reload = false
+compositing-background = over
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+
+[colors]
+background = #001c1a14
+background-alt = #001c1a14
+foreground = #CACBB9
+foreground-alt = #a0CACBB9
+primary = #d46e69
+secondary = #897C5B
+alert = #238792
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[bar/main]
+wm-restack = bspwm
+monitor = HDMI-A-0
+width = 100%
+height = 24
+fixed-center = true
+background = ${colors.background}
+foreground = ${colors.foreground}
+;offset-x = 1%
+;offset-y = 1%
+radius = 0.0
+bottom = false
+separator = 
+line-size = 2
+line-color = #f00
+override-redirect = false
+enable-ipc = true
+
+border-left-size = 16
+border-right-size = 16
+border-top-size = 4
+;border-bottom-size = 0
+border-color = 
+
+padding-left = 0
+padding-right = 0
+
+module-margin-top = 0 
+module-margin-bottom = 0 
+module-margin-left = 0
+module-margin-right = 0
+
+locale = it_IT.UTF-8
+
+font-0 = "Cascadia Code:bold:size=10;1"
+font-1 = "Remixicon:style=Regular:pixelsize=12;1"
+font-2 = "Noto Sans Symbols:pixelsize=10;1"
+
+modules-left = sep xwindow
+modules-center = bspwm
+modules-right =  pulseaudio xkeyboard date
+
+tray-detached = false
+tray-offset-x = 0
+tray-offset-y = 0
+tray-position = right
+tray-padding = 2
+tray-maxsize = 20
+tray-scale = 1.0
+tray-background = ${colors.background}
+
+scroll-up = bspwm-deskprev
+scroll-down = bspwm-desknext
+
+cursor-click = pointer
+;cursor-scroll = ns-resize
+
+[module/xwindow]
+type = internal/xwindow
+label = %title%
+label-maxlen = 70
+format-prefix = "  "
+format-prefix-foreground = ${colors.secondary}
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+format-prefix = " "
+format-prefix-foreground = ${colors.secondary}
+format-prefix-background = ${colors.background}
+format-prefix-underline = 
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+label-layout = %layout%
+label-layout-underline = 
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = 
+label-indicator-underline = 
+
+[module/bspwm]
+type = internal/bspwm
+pin-workspaces = true
+enable-click = true
+enable-scroll = false
+
+label-focused = ""
+label-occupied = ""
+label-urgent = ""
+label-empty = ""
+
+label-monitor = %name%
+label-focused-foreground = ${colors.primary}
+label-occupied-foreground = ${colors.foreground}
+label-urgent-foreground = ${colors.foreground}
+label-empty-foreground = ${colors.secondary}
+
+label-focused-padding-right = 1
+label-urgent-padding-right = 1
+label-occupied-padding-right = 1
+label-empty-padding-right = 1
+
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+;ws-icon-0 = 1;
+;ws-icon-1 = 2;
+;ws-icon-2 = 3;
+;ws-icon-3 = 4;
+;ws-icon-4 = 5;
+;ws-icon-5 = 6;
+;ws-icon-6 = 7;
+;ws-icon-7 = 8;
+;ws-icon-8 = 9;
+
+format = <label-state>
+;<label-mode>
+
+;label-focused-underline = #982c33
+;label-focused-padding = 
+;label-occupied-padding = 
+;label-occupied-underline = #b7609b
+;label-urgent-background = 
+;label-urgent-padding = 
+;label-empty-padding = 
+
+label-monocle = 
+label-tiled = 
+label-floating = ""
+label-fullscreen = 
+label-pseudotiled = P
+label-locked = 
+label-locked-foreground = #bd2c40
+label-sticky = 
+label-sticky-foreground = #fba922
+label-private = 
+label-private-foreground = #bd2c40
+label-marked = M
+
+[module/date]
+type = internal/date
+;date =" %b %e,"
+;date-alt = " %A %e de %B de %Y,"
+;time = "%H:%M "
+;time-alt = "%H:%M:%S "
+format-prefix-foreground = ${colors.secondary}
+format-background = ${colors.background}
+label-foreground = ${colors.foreground}
+interval = 60
+date = "%d/%m/%Y"
+date-alt = " %a %b %d, %Y"
+time = %H:%M%
+time-alt = %l:%M%p
+format-prefix = " "
+label = "%date% | %time%"
+
+[module/compton]
+type = custom/script
+exec = ~/.config/polybar/scripts/compton.sh
+click-left = ~/.config/polybar/scripts/compton-toggle.sh
+interval = 5
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+;format-underline = #00AF02
+
+[module/wired-network]
+type = internal/network
+interface = enp7s0
+interval = 3.0
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+; Default: %ifname% %local_ip%
+label-connected =  connected
+label-disconnected = %ifname% disconnected
+
+format-connected-foreground = ${colors.foreground}
+format-connected-background = ${colors.background}
+format-connected-underline = ${colors.foreground}
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.foreground}
+format-connected-prefix-background = ${colors.background}
+
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${colors.alert}
+label-disconnected-foreground = ${colors.foreground}
+
+[module/sep]
+type = custom/text
+content = " dvvvxx"
+content-foreground = ${colors.primary}
+content-background =  ${colors.background}
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+[module/pulseaudio]
+type = internal/alsa
+format-volume = "<label-volume>"
+use-ui-max = true
+label-volume = "%percentage%% "
+label-muted = " muted "
+format-muted-prefix = ""
+format-volume-prefix = " "
+format-volume-prefix-foreground = ${colors.secondary}
+format-volume-foreground = ${colors.foreground}
+format-volume-background = ${colors.background}
+format-muted-prefix-foreground = ${colors.secondary}
+format-muted-foreground = ${colors.foreground}
+format-muted-background = ${colors.background}
