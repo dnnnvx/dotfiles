@@ -15,7 +15,7 @@ configuration {
 }
 
 * {
-  text-color: #CACBB9;
+  text-color: #C0C0C0;
   background-color: rgba(0,0,0,0);
 }
 
@@ -26,7 +26,7 @@ window {
 mainbox {
   children: [ inputbar, listview ];
   padding: 40% 40% 40% 40%;
-  background-color: rgba(0,0,0,0.40);
+  background-color: rgba(0,0,0,0.64);
 }
 
 listview {
@@ -37,7 +37,7 @@ listview {
 
 element {
   background-color: rgba(28, 26, 20, 1);
-  text-color: #CACBB9;
+  text-color: #C0C0C0;
   border-radius: 4;
   orientation: vertical;
   padding: 4;
@@ -45,8 +45,8 @@ element {
 }
 
 element selected {
-  background-color: rgba(212, 110, 105, 1);
-  text-color: #CACBB9;
+  background-color: #BF4D80;
+  text-color: #C0C0C0;
   transition: 20;
 }
 
@@ -64,16 +64,16 @@ inputbar {
 }
 
 prompt {
-  background-color: #d46e69;
+  background-color: #BF4D80;
   padding: 4 8;
   border-radius: 4 0 0 4;
-  text-color: #CACBB9;
+  text-color: #C0C0C0;
   enabled: true;
 }
 
 entry {
   border-radius: 0 4 4 0;
-  background-color: rgba(165, 166, 153);
-  text-color: rgba(28, 26, 20, 1);
+  background-color: #C0C0C0;
+  text-color: #000000;
   padding: 4;
 }

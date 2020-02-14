@@ -1,45 +1,36 @@
-Xft.dpi: 96
-Xft.antialias: true
-Xft.hinting: true
-Xft.rgba: rgb
-Xft.autohint: false
-Xft.hintstyle: hintslight
-Xft.lcdfilter: lcddefault
-Xcursor.theme: Quintom
-
 ! special
-*.foreground:   #cacbb9
-*.background:   #1c1a14
-*.cursorColor:  #cacbb9
+*.foreground:   #ffffff
+*.background:   #000000
+*.cursorColor:  #ffffff
 
 ! black
-*.color0:       #0e0e04
-*.color8:       #a85e5d
+*.color0:       #333333
+*.color8:       #3d3d3d
 
 ! red
-*.color1:       #515a45
-*.color9:       #475a2e
+*.color1:       #8c4665
+*.color9:       #bf4d80
 
 ! green
-*.color2:       #68694f
-*.color10:      #676938
+*.color2:       #287373
+*.color10:      #53a6a6
 
 ! yellow
-*.color3:       #7f7f60
-*.color11:      #7f7f41
+*.color3:       #7c7c99
+*.color11:      #9e9ecb
 
 ! blue
-*.color4:       #989876
-*.color12:      #98984e
+*.color4:       #395573
+*.color12:      #477ab3
 
 ! magenta
-*.color5:       #897c5b
-*.color13:      #897645
+*.color5:       #5e468c
+*.color13:      #7e62b3
 
 ! cyan
-*.color6:       #a18e60
-*.color14:      #a17140
+*.color6:       #31658c
+*.color14:      #6096bf
 
 ! white
-*.color7:       #bb7774
-*.color15:      #c9cbac
+*.color7:       #899ca1
+*.color15:      #c0c0c0

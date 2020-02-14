@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font = "JetBrains Mono:pixelsize=12:antialias=true:autohint=true";
-static int borderpx = 16;
+static int borderpx = 8;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -87,28 +87,26 @@ float alpha = 0.8;
 
 static const char *colorname[] = {
   /* 8 normal colors */
-  [0] = "#0e0e04", /* black   */
-  [1] = "#515a45", /* red     */
-  [2] = "#68694f", /* green   */
-  [3] = "#7f7f60", /* yellow  */
-  [4] = "#989876", /* blue    */
-  [5] = "#897c5b", /* magenta */
-  [6] = "#a18e60", /* cyan    */
-  [7] = "#bb7774", /* white   */
-
+	[0] = "#333333", /* black   */
+	[1] = "#8c4665", /* red     */
+	[2] = "#287373", /* green   */
+	[3] = "#7c7c99", /* yellow  */
+	[4] = "#395573", /* blue    */
+	[5] = "#5e468c", /* magenta */
+	[6] = "#31658c", /* cyan    */
+	[7] = "#899ca1", /* white   */
   /* 8 bright colors */
-  [8]  = "#a85e5d", /* black   */
-  [9]  = "#475a2e", /* red     */
-  [10] = "#676938", /* green   */
-  [11] = "#7f7f41", /* yellow  */
-  [12] = "#98984e", /* blue    */
-  [13] = "#897645", /* magenta */
-  [14] = "#a17140", /* cyan    */
-  [15] = "#c9cbac", /* white   */
-
-  /* special colors */
-  [256] = "#15130f", /* background */
-  [257] = "#cacbb9", /* foreground */
+	[8]  = "#3d3d3d", /* black   */
+	[9]  = "#bf4d80", /* red     */
+	[10] = "#53a6a6", /* green   */
+	[11] = "#9e9ecb", /* yellow  */
+	[12] = "#477ab3", /* blue    */
+	[13] = "#7e62b3", /* magenta */
+	[14] = "#6096bf", /* cyan    */
+	[15] = "#c0c0c0", /* white   */
+	/* special colors */
+	[256] = "#000000", /* background */
+	[257] = "#ffffff", /* foreground */
 };
 
 unsigned int defaultfg = 257;
