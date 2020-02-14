@@ -1,6 +1,6 @@
 configuration {
   display-window: "::";
-  drun-display-format: "{icon} {name}";
+	window-format: " [{w}] {n}";
   font: "JetBrains Mono 10";
 	fake-transparency: false;
 	hide-scrollbar: true;
@@ -9,15 +9,6 @@ configuration {
   show-icons: true;
 	terminal: "st";
 	sidebar-mode: true;
-}
-
-* {
-  text-color: #C0C0C0;
-  background-color: rgba(0,0,0,0);
-}
-
-window {
-  background-color: rgba(0,0,0,0);
 }
 
 mainbox {
@@ -58,6 +49,10 @@ element-text {
 
 inputbar {
 	margin: 0 0 2 0;
+}
+
+textbox {
+	content: "wewe";
 }
 
 prompt {
