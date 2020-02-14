@@ -10,12 +10,12 @@ compositing-underline = over
 compositing-border = over
 
 [colors]
-background = #001c1a14
-background-alt = #001c1a14
-foreground = #CACBB9
-foreground-alt = #a0CACBB9
-primary = #d46e69
-secondary = #897C5B
+background = #001c1a00
+background-alt = #001c1a00
+foreground = #C0C0C0
+foreground-alt = #C0C0C0
+primary = #BF4D80
+secondary = #53A6A6
 alert = #238792
 
 [global/wm]
@@ -56,7 +56,7 @@ module-margin-right = 0
 
 locale = it_IT.UTF-8
 
-font-0 = "Cascadia Code:bold:size=10;1"
+font-0 = "JetBrains Mono:bold:size=9;1"
 font-1 = "Remixicon:style=Regular:pixelsize=12;1"
 font-2 = "Noto Sans Symbols:pixelsize=10;1"
 
@@ -78,6 +78,61 @@ scroll-down = bspwm-desknext
 
 cursor-click = pointer
 ;cursor-scroll = ns-resize
+
+[bar/main2]
+wm-restack = bspwm
+monitor = HDMI-A-1
+width = 100%
+height = 24
+fixed-center = true
+background = ${colors.background}
+foreground = ${colors.foreground}
+;offset-x = 1%
+;offset-y = 1%
+radius = 0.0
+bottom = false
+separator = 
+line-size = 2
+line-color = #f00
+override-redirect = false
+enable-ipc = true
+
+border-left-size = 16
+border-right-size = 16
+border-top-size = 4
+border-color = 
+
+padding-left = 0
+padding-right = 0
+
+module-margin-top = 0 
+module-margin-bottom = 0 
+module-margin-left = 0
+module-margin-right = 0
+
+locale = it_IT.UTF-8
+
+font-0 = "JetBrains Mono:bold:size=9;1"
+font-1 = "Remixicon:style=Regular:pixelsize=12;1"
+font-2 = "Noto Sans Symbols:pixelsize=10;1"
+
+modules-left = sep xwindow
+modules-center = bspwm
+modules-right =  date
+
+tray-detached = false
+tray-offset-x = 0
+tray-offset-y = 0
+tray-position = right
+tray-padding = 2
+tray-maxsize = 20
+tray-scale = 1.0
+tray-background = ${colors.background}
+
+scroll-up = bspwm-deskprev
+scroll-down = bspwm-desknext
+
+cursor-click = pointer
 
 [module/xwindow]
 type = internal/xwindow
@@ -119,8 +174,8 @@ label-empty = ""
 label-monitor = %name%
 label-focused-foreground = ${colors.primary}
 label-occupied-foreground = ${colors.foreground}
-label-urgent-foreground = ${colors.foreground}
-label-empty-foreground = ${colors.secondary}
+label-urgent-foreground = ${colors.primary}
+label-empty-foreground = ${colors.foreground}
 
 label-focused-padding-right = 1
 label-urgent-padding-right = 1
