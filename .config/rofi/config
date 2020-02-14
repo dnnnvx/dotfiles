@@ -1,5 +1,5 @@
 rofi.combi-modi: window,run,drun,ssh
-rofi.font: Cascadia Code Bold 10
+rofi.font: JetBrains Mono 10
 rofi.modi: combi,drun
 rofi.show-icons: true
 rofi.icon-theme: Papirus-Dark

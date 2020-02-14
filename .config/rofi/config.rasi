@@ -4,7 +4,7 @@ configuration {
   drun-display-format: "{icon}{name}";
 	modi: "window,drun,run,ssh";
 	combi-modi: "drun,run,ssh";
-  font: "Cascadia Code 12";
+  font: "JetBrains Mono 10";
 	fake-transparency: false;
 	hide-scrollbar: true;
 	bw: 0;
@@ -16,31 +16,31 @@ configuration {
 
 * {
   text-color: #CACBB9;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0,0,0,0);
 }
 
 window {
-  background-color: rgba(28, 26, 20, 0);
+  background-color: rgba(0,0,0,0);
 }
 
 mainbox {
   children: [ inputbar, listview ];
-  padding: 44% 66% 12% 4%;
-  background-color: rgba(28, 26, 20, 0.66);
+  padding: 40% 40% 40% 40%;
+  background-color: rgba(0,0,0,0.40);
 }
 
 listview {
   columns: 1;
   layout: vertical;
-  spacing: 8;
+  spacing: 4;
 }
 
 element {
   background-color: rgba(28, 26, 20, 1);
   text-color: #CACBB9;
-  border-radius: 10;
+  border-radius: 4;
   orientation: vertical;
-  padding: 8;
+  padding: 4;
 	margin: 0 10 0 0;
 }
 
@@ -51,7 +51,7 @@ element selected {
 }
 
 element-icon {
-  size: 60;
+  size: 32;
 }
 
 element-text {
@@ -60,20 +60,20 @@ element-text {
 }
 
 inputbar {
-	margin: 0 0 8 0;
+	margin: 0 0 2 0;
 }
 
 prompt {
   background-color: #d46e69;
-  padding: 8;
-  border-radius: 10 0 0 12;
+  padding: 4 8;
+  border-radius: 4 0 0 4;
   text-color: #CACBB9;
   enabled: true;
 }
 
 entry {
-  border-radius: 0 12 12 0;
+  border-radius: 0 4 4 0;
   background-color: rgba(165, 166, 153);
   text-color: rgba(28, 26, 20, 1);
-  padding: 8;
+  padding: 4;
 }
