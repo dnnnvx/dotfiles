@@ -1,0 +1,8 @@
+[colors]
+background = #001c1a00
+background-alt = #001c1a00
+foreground = #C0C0C0
+foreground-alt = #C0C0C0
+primary = #BF4D80
+secondary = #53A6A6
+alert = #238792

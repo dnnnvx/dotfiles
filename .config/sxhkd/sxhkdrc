@@ -4,7 +4,10 @@ super + Return
 
 # program launcher
 super + @space
-	rofi -show drun -display-drun ":"
+	rofi -show drun
+
+super + Tab
+	rofi -show
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -25,10 +28,6 @@ super + m
 # start polybar
 super + alt + p
 	polybar main
-
-# start polybar
-super + alt + f
-	polybar mainFill
 
 # stop polybar
 super + shift + p

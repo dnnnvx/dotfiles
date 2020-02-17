@@ -1,1 +1,1 @@
-Custom dotfiles :)
+dot dot
