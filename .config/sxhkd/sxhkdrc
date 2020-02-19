@@ -5,9 +5,8 @@ super + Return
 # program launcher
 super + @space
 	rofi -show drun
-
 super + Tab
-	rofi -show
+	rofi -show window -kb-row-down 'super+Tab' -kb-accept-entry '!super+Tab'
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -27,11 +26,12 @@ super + m
 
 # start polybar
 super + alt + p
-	polybar main
+	${HOME}/.config/polybar/launch.sh
 
 # stop polybar
 super + shift + p
-	killall polybar
+	killall -q polybar
+
 
 # send the newest marked node to the newest preselected node
 super + y
@@ -74,7 +74,7 @@ super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
-super + {grave,Tab}
+super + ctrl + {grave,Tab}
 	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
