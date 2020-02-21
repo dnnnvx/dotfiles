@@ -1,6 +1,7 @@
 configuration {
-  display-drun: "";
-  drun-display-format: "{icon} {name}";
+  display-window: "";
+	window-format: " {w} | {n}";
+  font: "JetBrains Mono 10";
 	fake-transparency: false;
 	hide-scrollbar: true;
 	bw: 0;
@@ -20,7 +21,7 @@ window {}
 
 mainbox {
   children: [ inputbar, listview ];
-  margin: 24% 34% 44% 34%;
+  margin: 24% 40% 56% 40%;
   background-color: #050506;
   border-radius: 6;
   border: 2;
@@ -28,7 +29,7 @@ mainbox {
 }
 
 listview {
-  columns: 2;
+  columns: 1;
   layout: vertical;
   padding: 8;
   spacing: 0;

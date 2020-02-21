@@ -6,7 +6,9 @@ super + Return
 super + @space
 	rofi -show drun
 super + Tab
-	rofi -show window -kb-row-down 'super+Tab' -kb-accept-entry '!super+Tab'
+	rofi -show window -theme window -kb-row-down 'super+Tab' -kb-accept-entry '!super+Tab'
+super + r
+	rofi -show run
 
 # make sxhkd reload its configuration files:
 super + Escape
