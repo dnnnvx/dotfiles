@@ -32,7 +32,7 @@ super + alt + p
 
 # stop polybar
 super + shift + p
-	killall -q polybar
+	kill polybar
 
 
 # send the newest marked node to the newest preselected node

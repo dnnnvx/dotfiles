@@ -10,13 +10,10 @@ compositing-underline = over
 compositing-border = over
 
 [colors]
-background = #001c1a00
-background-alt = #001c1a00
-foreground = #C0C0C0
-foreground-alt = #C0C0C0
+background = #00000000
+foreground = #d1d5da
+foreground-alt = #808080
 primary = #BF4D80
-secondary = #53A6A6
-alert = #238792
 
 [global/wm]
 margin-top = 0
@@ -68,8 +65,8 @@ tray-detached = false
 tray-offset-x = 0
 tray-offset-y = 0
 tray-position = right
-tray-padding = 2
-tray-maxsize = 20
+tray-padding = 0
+tray-maxsize = 10
 tray-scale = 1.0
 tray-background = ${colors.background}
 
@@ -124,8 +121,8 @@ tray-detached = false
 tray-offset-x = 0
 tray-offset-y = 0
 tray-position = right
-tray-padding = 2
-tray-maxsize = 20
+tray-padding = 0
+tray-maxsize = 10
 tray-scale = 1.0
 tray-background = ${colors.background}
 
@@ -138,16 +135,16 @@ cursor-click = pointer
 type = internal/xwindow
 label = %title%
 label-maxlen = 70
-format-prefix = "  "
-format-prefix-foreground = ${colors.secondary}
-format-foreground = ${colors.foreground}
+format-prefix = " · "
+format-prefix-foreground = ${colors.foreground-alt}
+format-foreground = ${colors.foreground-alt}
 format-background = ${colors.background}
 
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
 format-prefix = " "
-format-prefix-foreground = ${colors.secondary}
+format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-background = ${colors.background}
 format-prefix-underline = 
 format-foreground = ${colors.foreground}
@@ -166,16 +163,16 @@ pin-workspaces = true
 enable-click = true
 enable-scroll = false
 
-label-focused = ""
-label-occupied = ""
-label-urgent = ""
-label-empty = ""
+label-focused = ""
+label-occupied = ""
+label-urgent = ""
+label-empty = ""
 
 label-monitor = %name%
 label-focused-foreground = ${colors.primary}
 label-occupied-foreground = ${colors.foreground}
 label-urgent-foreground = ${colors.primary}
-label-empty-foreground = ${colors.foreground}
+label-empty-foreground = ${colors.foreground-alt}
 
 label-focused-padding-right = 1
 label-urgent-padding-right = 1
@@ -225,7 +222,7 @@ type = internal/date
 ;date-alt = " %A %e de %B de %Y,"
 ;time = "%H:%M "
 ;time-alt = "%H:%M:%S "
-format-prefix-foreground = ${colors.secondary}
+format-prefix-foreground = ${colors.foreground-alt}
 format-background = ${colors.background}
 label-foreground = ${colors.foreground}
 interval = 60
@@ -234,7 +231,7 @@ date-alt = " %a %b %d, %Y"
 time = %H:%M%
 time-alt = %l:%M%p
 format-prefix = " "
-label = "%date% | %time%"
+label = "%date% · %time%"
 
 [module/compton]
 type = custom/script
@@ -270,12 +267,12 @@ format-connected-prefix-foreground = ${colors.foreground}
 format-connected-prefix-background = ${colors.background}
 
 format-disconnected = <label-disconnected>
-format-disconnected-underline = ${colors.alert}
+format-disconnected-underline = ${colors.foreground}
 label-disconnected-foreground = ${colors.foreground}
 
 [module/sep]
 type = custom/text
-content = " dvvvxx"
+content = " dvvvxx"
 content-foreground = ${colors.primary}
 content-background =  ${colors.background}
 format-foreground = ${colors.foreground}
@@ -289,9 +286,9 @@ label-volume = "%percentage%% "
 label-muted = " muted "
 format-muted-prefix = ""
 format-volume-prefix = " "
-format-volume-prefix-foreground = ${colors.secondary}
+format-volume-prefix-foreground = ${colors.foreground-alt}
 format-volume-foreground = ${colors.foreground}
 format-volume-background = ${colors.background}
-format-muted-prefix-foreground = ${colors.secondary}
+format-muted-prefix-foreground = ${colors.foreground-alt}
 format-muted-foreground = ${colors.foreground}
 format-muted-background = ${colors.background}
