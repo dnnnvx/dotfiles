@@ -28,7 +28,7 @@ set laststatus=2
 set number
 
 "highlight current line
-set cursorline
+"set cursorline
 
 "display text width column
 "set colorcolumn=81
@@ -50,53 +50,45 @@ set hlsearch
 set ignorecase
 set smartcase
 
-"you need this to always display the status line
-set laststatus=2
-
 "modifiedflag, charcount, filepercent, filepath
 set statusline=%=%m\ %c\ %P\ %f
 
 set encoding=utf-8
 set fileencoding=utf-8
+
 autocmd Filetype go setlocal tabstop=2 shiftwidth=2 softtabstop=2
 " ts - show existing tab with 4 spaces width
 " sw - when indenting with '>', use 4 spaces width
 " sts - control <tab> and <bs> keys to match tabstop
 
 set shiftwidth=2
-filetype plugin indent on
+set tabstop=2
+set softtabstop=2
+set expandtab                         " expand tabs into spaces
+set smarttab                          " smart tabulation and backspace
+set bs=indent,eol,start               " allow backspacing over everything
 
+filetype plugin indent on
 
 "vim-go
 filetype plugin indent on
 au filetype go inoremap <buffer> . .<C-x><C-o>
 
-"vim-airline
-let g:airline_powerline_fonts = 1
+"assume environment can use 256 colors
+set t_Co=256
 
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
+"show the cursor position
+set ruler
 
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
+"don't use modelines
+set modelines=0
 
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
+"set list                              " show non-print characters,...
+"set listchars=trail:⋅,nbsp:⋅,tab:▷⋅   " for tabs and trailing spaces
+set mouse=a                           " enable mouse in all modes
+set display+=lastline                 " show as much as possible of last line
+
+"set termguicolors
+"set background=dark
+colorscheme hyper
+syntax on
