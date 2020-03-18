@@ -80,50 +80,44 @@ char *termname = "st-256color";
  *
  *	stty tabs
  */
-unsigned int tabspaces = 2;
+unsigned int tabspaces = 8;
 
-/* bg opacity */
-float alpha = 0.8;
-
+/* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 
   /* 8 normal colors */
-  [0] = "#19191e", /* black   */
-  [1] = "#bfa1ae", /* red     */
-  [2] = "#8ba6a6", /* green   */
-  [3] = "#ababcc", /* yellow  */
-  [4] = "#96a4b3", /* blue    */
-  [5] = "#a196b3", /* magenta */
-  [6] = "#a1b2bf", /* cyan    */
-  [7] = "#d1d5da", /* white   */
+  [0] = "#686868", /* black   */
+  [1] = "#472931", /* red     */
+  [2] = "#913b51", /* green   */
+  [3] = "#651d66", /* yellow  */
+  [4] = "#3a8d8d", /* blue    */
+  [5] = "#d15191", /* magenta */
+  [6] = "#4d5dbd", /* cyan    */
+  [7] = "#ffffff", /* white   */
 
   /* 8 bright colors */
-  [8]  = "#bf4d80", /* black   */
-  [9]  = "#bf91a5", /* red     */
-  [10] = "#7ea6a6", /* green   */
-  [11] = "#9c9ccc", /* yellow  */
-  [12] = "#889db3", /* blue    */
-  [13] = "#9888b3", /* magenta */
-  [14] = "#92abbf", /* cyan    */
-  [15] = "#b6c6da", /* white   */
+  [8]  = "#373b41", /* black   */
+  [9]  = "#472931", /* red     */
+  [10] = "#561c2b", /* green   */
+  [11] = "#451446", /* yellow  */
+  [12] = "#345757", /* blue    */
+  [13] = "#a2527a", /* magenta */
+  [14] = "#404cc2", /* cyan    */
+  [15] = "#bababa", /* white   */
 
   /* special colors */
   [256] = "#000000", /* background */
-  [257] = "#d1d5da", /* foreground */
+  [257] = "#d9d7ce", /* foreground */
 };
 
+/*
+ * Default colors (colorname index)
+ * foreground, background, cursor, reverse cursor
+ */
 unsigned int defaultfg = 257;
 unsigned int defaultbg = 256;
-static unsigned int defaultrcs = 257;
 static unsigned int defaultcs = 257;
-
-/*
- * Colors used, when the specific fg == defaultfg. So in reverse mode this
- * will reverse too. Another logic would only make the simple feature too
- * complex.
- */
-static unsigned int defaultitalic = 7;
-static unsigned int defaultunderline = 7;
+static unsigned int defaultrcs = 257;
 
 /*
  * Default shape of cursor
@@ -155,13 +149,21 @@ static unsigned int mousebg = 0;
 static unsigned int defaultattr = 11;
 
 /*
+ * Force mouse select/shortcuts while mask is active (when MODE_MOUSE is set).
+ * Note that if you want to use ShiftMask with selmasks, set this to an other
+ * modifier, set to 0 to not use it.
+ */
+static uint forcemousemod = ShiftMask;
+
+/*
  * Internal mouse shortcuts.
  * Beware that overloading Button1 will disable the selection.
  */
 static MouseShortcut mshortcuts[] = {
-	/* button               mask            string */
-	{ Button4,              XK_ANY_MOD,     "\031" },
-	{ Button5,              XK_ANY_MOD,     "\005" },
+	/* mask                 button   function        argument       release */
+	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
+	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
+	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
 };
 
 /* Internal keyboard shortcuts. */
@@ -182,8 +184,6 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
-	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 };
 
 /*
@@ -201,10 +201,6 @@ static Shortcut shortcuts[] = {
  * * 0: no value
  * * > 0: cursor application mode enabled
  * * < 0: cursor application mode disabled
- * crlf value
- * * 0: no value
- * * > 0: crlf mode is enabled
- * * < 0: crlf mode is disabled
  *
  * Be careful with the order of the definitions because st searches in
  * this table sequentially, so any XK_ANY_MOD must be in the last
@@ -222,13 +218,6 @@ static KeySym mappedkeys[] = { -1 };
  * numlock (Mod2Mask) and keyboard layout (XK_SWITCH_MOD) are ignored.
  */
 static uint ignoremod = Mod2Mask|XK_SWITCH_MOD;
-
-/*
- * Override mouse-select while mask is active (when MODE_MOUSE is set).
- * Note that if you want to use ShiftMask with selmasks, set this to an other
- * modifier, set to 0 to not use it.
- */
-static uint forceselmod = ShiftMask;
 
 /*
  * This is the huge key array which defines all compatibility to the Linux
