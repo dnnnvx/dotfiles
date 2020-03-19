@@ -37,20 +37,17 @@ line-color = #f00
 override-redirect = false
 enable-ipc = true
 
-border-left-size = 8
-border-right-size = 8
 border-top-size = 4
-border-color = 
 
-padding-left = 0
-padding-right = 0
+padding-left = 1
+padding-right = 1
 
 module-margin-top = 0 
 module-margin-bottom = 0 
 module-margin-left = 0
 module-margin-right = 0
 
-locale = it_IT.UTF-8
+locale = en_US.UTF-8
 
 font-0 = "JetBrains Mono:bold:size=9;1"
 font-1 = "Remixicon:style=Regular:pixelsize=11;1"
@@ -61,11 +58,11 @@ modules-center = bspwm
 modules-right =  pulseaudio xkeyboard cal time
 
 tray-detached = false
-tray-maxsize = 18
-tray-scale = 1.0
+tray-maxsize = 16
+tray-scale = 0.8
 tray-offset-x = 0
 tray-offset-y = 0
-tray-position = left
+tray-position = right
 tray-padding = 0
 tray-background = ${colors.background}
 
@@ -93,20 +90,17 @@ line-color = #f00
 override-redirect = false
 enable-ipc = true
 
-border-left-size = 8
-border-right-size = 8
 border-top-size = 4
-border-color = 
 
-padding-left = 0
-padding-right = 0
+padding-left = 1
+padding-right = 1
 
 module-margin-top = 0 
 module-margin-bottom = 0 
 module-margin-left = 0
 module-margin-right = 0
 
-locale = it_IT.UTF-8
+locale = en_US.UTF-8
 
 font-0 = "JetBrains Mono:bold:size=9;1"
 font-1 = "Remixicon:style=Regular:pixelsize=11;1"
