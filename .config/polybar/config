@@ -11,9 +11,9 @@ compositing-border = over
 
 [colors]
 background = #00000000
-foreground = #d1d5da
-foreground-alt = #808080
-primary = #BF4D80
+foreground = #bababa
+primary = #a2527a
+secondary = #767680
 
 [global/wm]
 margin-top = 0
@@ -23,7 +23,7 @@ margin-bottom = 0
 wm-restack = bspwm
 monitor = HDMI-A-0
 width = 100%
-height = 24
+height = 20
 fixed-center = true
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -37,37 +37,33 @@ line-color = #f00
 override-redirect = false
 enable-ipc = true
 
-border-left-size = 16
-border-right-size = 16
 border-top-size = 4
-;border-bottom-size = 0
-border-color = 
 
-padding-left = 0
-padding-right = 0
+padding-left = 1
+padding-right = 1
 
 module-margin-top = 0 
 module-margin-bottom = 0 
 module-margin-left = 0
 module-margin-right = 0
 
-locale = it_IT.UTF-8
+locale = en_US.UTF-8
 
 font-0 = "JetBrains Mono:bold:size=9;1"
-font-1 = "Remixicon:style=Regular:pixelsize=12;1"
+font-1 = "Remixicon:style=Regular:pixelsize=11;1"
 font-2 = "Noto Sans Symbols:pixelsize=10;1"
 
 modules-left = sep xwindow
 modules-center = bspwm
-modules-right =  pulseaudio xkeyboard date
+modules-right =  pulseaudio xkeyboard cal time
 
 tray-detached = false
+tray-maxsize = 16
+tray-scale = 0.8
 tray-offset-x = 0
 tray-offset-y = 0
 tray-position = right
 tray-padding = 0
-tray-maxsize = 10
-tray-scale = 1.0
 tray-background = ${colors.background}
 
 scroll-up = bspwm-deskprev
@@ -80,7 +76,7 @@ cursor-click = pointer
 wm-restack = bspwm
 monitor = HDMI-A-1
 width = 100%
-height = 24
+height = 20
 fixed-center = true
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -94,36 +90,33 @@ line-color = #f00
 override-redirect = false
 enable-ipc = true
 
-border-left-size = 16
-border-right-size = 16
 border-top-size = 4
-border-color = 
 
-padding-left = 0
-padding-right = 0
+padding-left = 1
+padding-right = 1
 
 module-margin-top = 0 
 module-margin-bottom = 0 
 module-margin-left = 0
 module-margin-right = 0
 
-locale = it_IT.UTF-8
+locale = en_US.UTF-8
 
 font-0 = "JetBrains Mono:bold:size=9;1"
-font-1 = "Remixicon:style=Regular:pixelsize=12;1"
+font-1 = "Remixicon:style=Regular:pixelsize=11;1"
 font-2 = "Noto Sans Symbols:pixelsize=10;1"
 
 modules-left = sep xwindow
 modules-center = bspwm
-modules-right =  date
+modules-right = wired-network cpu memory cal time
 
 tray-detached = false
+tray-maxsize = 14
+tray-scale = 1
 tray-offset-x = 0
 tray-offset-y = 0
 tray-position = right
-tray-padding = 0
-tray-maxsize = 10
-tray-scale = 1.0
+tray-padding = 4
 tray-background = ${colors.background}
 
 scroll-up = bspwm-deskprev
@@ -136,15 +129,15 @@ type = internal/xwindow
 label = %title%
 label-maxlen = 70
 format-prefix = " · "
-format-prefix-foreground = ${colors.foreground-alt}
-format-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
+format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.secondary}
 format-prefix-background = ${colors.background}
 format-prefix-underline = 
 format-foreground = ${colors.foreground}
@@ -163,16 +156,16 @@ pin-workspaces = true
 enable-click = true
 enable-scroll = false
 
-label-focused = ""
-label-occupied = ""
-label-urgent = ""
+label-focused = ""
+label-occupied = ""
+label-urgent = ""
 label-empty = ""
 
 label-monitor = %name%
 label-focused-foreground = ${colors.primary}
-label-occupied-foreground = ${colors.foreground}
-label-urgent-foreground = ${colors.primary}
-label-empty-foreground = ${colors.foreground-alt}
+label-occupied-foreground = ${colors.secondary}
+label-urgent-foreground = ${colors.secondary}
+label-empty-foreground = ${colors.secondary}
 
 label-focused-padding-right = 1
 label-urgent-padding-right = 1
@@ -195,10 +188,10 @@ format-background = ${colors.background}
 format = <label-state>
 ;<label-mode>
 
-;label-focused-underline = #982c33
+;label-focused-underline = ${colors.foreground}
 ;label-focused-padding = 
 ;label-occupied-padding = 
-;label-occupied-underline = #b7609b
+;label-occupied-underline = ${colors.foreground}
 ;label-urgent-background = 
 ;label-urgent-padding = 
 ;label-empty-padding = 
@@ -209,44 +202,36 @@ label-floating = ""
 label-fullscreen = 
 label-pseudotiled = P
 label-locked = 
-label-locked-foreground = #bd2c40
+label-locked-foreground = ${colors.foreground}
 label-sticky = 
-label-sticky-foreground = #fba922
+label-sticky-foreground = ${colors.foreground}
 label-private = 
-label-private-foreground = #bd2c40
+label-private-foreground = ${colors.foreground}
 label-marked = M
 
-[module/date]
+[module/cal]
 type = internal/date
-;date =" %b %e,"
-;date-alt = " %A %e de %B de %Y,"
-;time = "%H:%M "
-;time-alt = "%H:%M:%S "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.secondary}
+format-background = ${colors.background}
+label-foreground = ${colors.foreground}
+date = "%d/%m/%Y"
+format-prefix = " "
+label = "%date%"
+
+[module/time]
+type = internal/date
+format-prefix-foreground = ${colors.secondary}
 format-background = ${colors.background}
 label-foreground = ${colors.foreground}
 interval = 60
-date = "%d/%m/%Y"
-date-alt = " %a %b %d, %Y"
 time = %H:%M%
-time-alt = %l:%M%p
-format-prefix = " "
-label = "%date% · %time%"
-
-[module/compton]
-type = custom/script
-exec = ~/.config/polybar/scripts/compton.sh
-click-left = ~/.config/polybar/scripts/compton-toggle.sh
-interval = 5
-format-foreground = ${colors.foreground}
-format-background = ${colors.background}
-;format-underline = #00AF02
+format-prefix = "  "
+label = "%time%"
 
 [module/wired-network]
 type = internal/network
 interface = enp7s0
 interval = 3.0
-
 ; Available tokens:
 ;   %ifname%    [wireless+wired]
 ;   %local_ip%  [wireless+wired]
@@ -256,24 +241,22 @@ interval = 3.0
 ;   %downspeed% [wireless+wired]
 ;   %linkspeed% [wired]
 ; Default: %ifname% %local_ip%
-label-connected =  connected
-label-disconnected = %ifname% disconnected
-
+label-connected = "%local_ip% "
+label-foreground: ${colors.foreground}
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
-format-connected-underline = ${colors.foreground}
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground}
-format-connected-prefix-background = ${colors.background}
-
-format-disconnected = <label-disconnected>
-format-disconnected-underline = ${colors.foreground}
+format-disconnected-foreground = ${colors.foreground}
+format-disconnected-background = ${colors.background}
+format-connected-prefix-foreground = ${colors.secondary}
+format-disconnected-prefix-foreground = ${colors.secondary}
+format-connected-prefix = " "
+format-disconnected-prefix = " "
 label-disconnected-foreground = ${colors.foreground}
 
 [module/sep]
 type = custom/text
-content = " dvvvxx"
-content-foreground = ${colors.primary}
+content = " dvvvxx"
+content-foreground = ${colors.secondary}
 content-background =  ${colors.background}
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
@@ -283,12 +266,35 @@ type = internal/alsa
 format-volume = "<label-volume>"
 use-ui-max = true
 label-volume = "%percentage%% "
-label-muted = " muted "
+label-muted = " Mute "
 format-muted-prefix = ""
 format-volume-prefix = " "
-format-volume-prefix-foreground = ${colors.foreground-alt}
+format-volume-prefix-foreground = ${colors.secondary}
 format-volume-foreground = ${colors.foreground}
 format-volume-background = ${colors.background}
-format-muted-prefix-foreground = ${colors.foreground-alt}
+format-muted-prefix-foreground = ${colors.secondary}
 format-muted-foreground = ${colors.foreground}
 format-muted-background = ${colors.background}
+
+[module/cpu]
+type = internal/cpu
+interval = 3
+format-prefix = ""
+format-foreground = ${colors.secondary}
+label = " %percentage%% "
+label-foreground = ${colors.foreground}
+
+[module/memory]
+type = internal/memory
+interval = 3
+format-prefix = ""
+format-foreground = ${colors.secondary}
+label = " %percentage_used%% "
+label-foreground = ${colors.foreground}
+
+[module/temperature]
+type = internal/temperature
+interval = 3
+thermal-zone = 0
+base-temperature = 20
+warn-temperature = 60

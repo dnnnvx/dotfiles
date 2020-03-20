@@ -1,7 +1,7 @@
+xrdb -merge ~/.Xresources &
 xsetroot -cursor_name left_ptr &
 /usr/bin/start-pulseaudio-x11 &
 /bin/setxkbmap it &
-feh --bg-fill ~/Pictures/bg.png &
+feh --bg-fill ~/Pictures/m.png &
 picom &
-sxhkd &
 exec bspwm
