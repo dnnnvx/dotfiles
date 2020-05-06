@@ -90,5 +90,6 @@ set display+=lastline                 " show as much as possible of last line
 
 "set termguicolors
 "set background=dark
-colorscheme hyper
+
 syntax on
+colorscheme koehler

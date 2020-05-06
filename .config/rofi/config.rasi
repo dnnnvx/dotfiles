@@ -27,8 +27,8 @@ mainbox {
   margin: 12% 34% 50% 34%;
   background-color: #000000;
   border-radius: 12;
-  border: 2;
-  border-color: #ffffff0A;
+  border: 1;
+  border-color: #141414;
 }
 
 listview {
@@ -38,28 +38,20 @@ listview {
 }
 
 element {
-  border: 1;
-  text-color: #bdc3c3;
+  text-color: #989898;
 	orientation: vertical;
   padding: 8 12 8 12;
   border-radius: 6;
 }
 
 element selected {
-  background-color: #869fa214;
-  border-color: #ffffff0A;
-  text-color: #869fa2;
+  background-color: #0a0a0a;
+  text-color: #ffffff;
   transition: 20;
 }
 
 element-icon {
-	size: 60;
-  horizontal-align: 0.5;
-  vertical-align: 0.5;
-}
-
-element-icon {
-  size: 40;
+	size: 40;
   horizontal-align: 0.5;
   vertical-align: 0.5;
 }
@@ -73,9 +65,9 @@ element-text {
 inputbar {
 	children: [entry];
   padding: 4 8 4 8;
-  background-color: #ffffff03;
+  background-color: #000000;
   border: 0 0 1 0;
-  border-color: #ffffff0A;
+  border-color: #141414;
 }
 
 prompt {

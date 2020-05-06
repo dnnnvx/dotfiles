@@ -32,5 +32,6 @@
     "go.formatTool": "goimports",
     "go.useLanguageServer": true,
     "workbench.colorTheme": "Field Lights",
-    "timeline.showView": true
+    "timeline.showView": true,
+    "diffEditor.ignoreTrimWhitespace": false
 }

@@ -8,38 +8,38 @@ Xft.lcdfilter: lcddefault
 Xcursor.theme: McMojave
 
 ! special
-*.foreground:   #cbd3d5
-*.background:   #000000
-*.cursorColor:  #cbd3d5
+*.foreground:   #b9b9b9
+*.background:   #101010
+*.cursorColor:  #b9b9b9
 
 ! black
-*.color0:       #04060e
-*.color8:       #5da8a5
+*.color0:       #101010
+*.color8:       #525252
 
 ! red
-*.color1:       #4a404e
-*.color9:       #54455a
+*.color1:       #7c7c7c
+*.color9:       #7c7c7c
 
 ! green
-*.color2:       #5e3653
-*.color10:      #69385b
+*.color2:       #8e8e8e
+*.color10:      #8e8e8e
 
 ! yellow
-*.color3:       #674173
-*.color11:      #70417f
+*.color3:       #a0a0a0
+*.color11:      #a0a0a0
 
 ! blue
-*.color4:       #8c4e83
-*.color12:      #984e8e
+*.color4:       #686868
+*.color12:      #686868
 
 ! magenta
-*.color5:       #45757d
-*.color13:      #457f89
+*.color5:       #747474
+*.color13:      #747474
 
 ! cyan
-*.color6:       #428b96
-*.color14:      #4095a1
+*.color6:       #868686
+*.color14:      #868686
 
 ! white
-*.color7:       #a85d7f
-*.color15:      #acc3cb
+*.color7:       #b9b9b9
+*.color15:      #f7f7f7

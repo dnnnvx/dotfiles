@@ -12,7 +12,7 @@ compositing-border = over
 [colors]
 background = #00000000
 foreground = #bababa
-primary = #a2527a
+primary = #b9b9b9
 secondary = #767680
 
 [global/wm]
@@ -106,7 +106,7 @@ font-0 = "JetBrains Mono:bold:size=9;1"
 font-1 = "Remixicon:style=Regular:pixelsize=11;1"
 font-2 = "Noto Sans Symbols:pixelsize=10;1"
 
-modules-left = sep xwindow
+modules-left = sep 
 modules-center = bspwm
 modules-right = wired-network cpu memory cal time
 
