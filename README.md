@@ -42,7 +42,7 @@ shellcheck
 - [bspwm](https://github.com/baskerville/bspwm)
 - [sxhkd](https://github.com/baskerville/sxhkd)
 
-# Go
+## Go
 - [gotop](https://github.com/cjbassi/gotop)
 - [gops](https://github.com/google/gops)
 - [fzf](https://github.com/junegunn/fzf)
@@ -55,6 +55,8 @@ shellcheck
 - [fish-nvm](https://github.com/jorgebucaran/fish-nvm)
 
 # Utilities
+- [bash](./docs/scripting.md)
+- [regex](./docs/regex.md)
 
 ## Create Pulseaudio module for OBS
 ```
