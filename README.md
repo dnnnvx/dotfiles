@@ -11,10 +11,13 @@ lmms
 tig
 p7zip
 docker
-pfetch / neofetch
-chromium / firefox
+pfetch
+neofetch
+chromium
+firefox
 fontconfig
-noto / noto-fonts-emoji
+noto-fonts-ttf
+noto-fonts-emoji
 blender
 android-studio
 cava
@@ -25,23 +28,31 @@ yarn
 nodejs
 audacity
 godot
-gotop / htop
+htop
 powertop
 synfigstudio
 picom
 vlc
 aws-cli
+tree
+shellcheck
 
 ## Git:
-bashtop
-bspwm
-sxhkd
-bashtop
+- [bashtop](https://github.com/aristocratos/bashtop)
+- [bspwm](https://github.com/baskerville/bspwm)
+- [sxhkd](https://github.com/baskerville/sxhkd)
+
+# Go
+- [gotop](https://github.com/cjbassi/gotop)
+- [gops](https://github.com/google/gops)
+- [fzf](https://github.com/junegunn/fzf)
 
 ## Others:
-Brew
-Go
-Flutter / Dart
+- [Go](https://golang.org/dl/)
+- [Brew](https://brew.sh/)
+- [Flutter/Dart](https://flutter.dev/docs/get-started/install/linux)
+- [fisher](https://github.com/jorgebucaran/fisher)
+- [fish-nvm](https://github.com/jorgebucaran/fish-nvm)
 
 # Utilities
 
