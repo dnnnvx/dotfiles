@@ -1,41 +1,10 @@
 ## xbps-install
-ncdu
-obs
-vscode
-alacritty
-telegram-desktop
-pulseaudio
-pulseeffects
-pcmanfm
-lmms
-tig
-p7zip
-docker
-pfetch
-neofetch
-chromium
-firefox
-fontconfig
-noto-fonts-ttf
-noto-fonts-emoji
-blender
-android-studio
-cava
-parted
-fish-shell
-gimp
-yarn
-nodejs
-audacity
-godot
-htop
-powertop
-synfigstudio
-picom
-vlc
-aws-cli
-tree
-shellcheck
+```
+xbps-install -Su
+xbps-install \
+ncdu obs vscode alacritty telegram-desktop pulseaudio pulseeffects pcmanfm lmms tig p7zip docker pfetch neofetch chromium firefox fontconfig noto-fonts-ttf noto-fonts-emoji blender android-studio cava parted fish-shell gimp yarn nodejs audacity godot htop powertop synfigstudio picom vlc aws-cli tree shellcheck
+xbps-remove -Oo
+```
 
 ## Git:
 - [bashtop](https://github.com/aristocratos/bashtop)
