@@ -5,7 +5,7 @@ Dot 👽 Dot 🦎
 ```console
 dnnnvx@void:~$ sudo xbps-install -Su
 dnnnvx@void:~$ sudo xbps-install xorg-minimal xinit xf86-video-amdgpu
-dnnnvx@void:~$ sudo xbps-install base-devel git dbus jq ncdu obs vscode alacritty telegram-desktop pulseaudio pulseeffects pcmanfm lmms tig p7zip docker pfetch neofetch chromium firefox fontconfig noto-fonts-ttf noto-fonts-emoji blender android-studio cava parted fish-shell gimp yarn nodejs audacity godot htop powertop synfigstudio picom vlc aws-cli tree shellcheck papirus-icon-theme
+dnnnvx@void:~$ sudo xbps-install base-devel git dbus jq ncdu obs vscode alacritty telegram-desktop pulseaudio pcmanfm lmms tig p7zip docker pfetch neofetch chromium firefox fontconfig noto-fonts-ttf noto-fonts-emoji blender android-studio cava parted fish-shell gimp audacity godot htop powertop synfigstudio picom vlc aws-cli tree shellcheck papirus-icon-theme
 dnnnvx@void:~$ sudo usermod -aG input,video,docker,kvm $USER
 dnnnvx@void:~$ sudo xbps-remove -Oo
 ```
