@@ -7,34 +7,36 @@
 Golang, Docker ([docs](https://wiki.voidlinux.org/Docker)) and k8s ([docs](https://wiki.voidlinux.org/Kubernetes)):
 
 ```console
-dnnnvx@void:~$ sudo xbps-install -S go docker kubernetes gcc conntrack-tools socat
-dnnnvx@void:~$ cd /var/service
-dnnnvx@void:~$ ln -s /etc/sv/docker .
-dnnnvx@void:~$ ln -sf /etc/sv/kube* .
-dnnnvx@void:~$ sudo usermod -aG docker $USER
-dnnnvx@void:~$ sudo sv stop kubelet kube-scheduler kube-proxy kube-controller-manager kube-apiserver
+$ sudo xbps-install -S go docker kubernetes gcc conntrack-tools socat
+$ cd /var/service
+$ ln -s /etc/sv/docker .
+$ ln -sf /etc/sv/kube* .
+$ sudo usermod -aG docker $USER
+$ sudo sv start kube-scheduler kube-apiserver kube-proxy
+$ sudo sv stop kubelet kube-controller-manager
 ```
 
-CNI and CNI Plugins:
+Cilium requirements ([docs](https://docs.cilium.io/en/stable/kubernetes/requirements/#k8s-requirements)):
 
-```console
-dnnnvx@void:~$ go get -u github.com/containernetworking/cni/...
-dnnnvx@void:~$ go get -u github.com/containernetworking/plugins/...
-```
-Cilium requirements ([docs](https://docs.cilium.io/en/stable/kubernetes/requirements/#k8s-requirements))
+CNI, Container Network plugin:
+Make sure to have `--network-plugin=cni` in the kubelet flags.
 
 Mount `BPF` (on all nodes):
 ```console
-dnnnvx@void:~$ sudo mount bpffs /sys/fs/bpf -t bpf
+$ sudo mount bpffs /sys/fs/bpf -t bpf
 ```
 > For persistence add `bpffs /sys/fs/bpf bpf defaults 0 0` to `/etc/fstab`.
 
-> Remember to use `kube-controller-manager` with `--allocate-node-cidrs` ([recommended](https://docs.cilium.io/en/stable/kubernetes/requirements/#enable-automatic-node-cidr-allocation-recommended)).
+Remember to use `kube-controller-manager` with `--allocate-node-cidrs` ([recommended](https://docs.cilium.io/en/stable/kubernetes/requirements/#enable-automatic-node-cidr-allocation-recommended)), it seems that `/etc/sv/kube-controller-manager/run` use `$KUBE_CONTROLLER_MANAGER_ARGS`, so you can add them to `/etc/profile`:
+
+```console
+# echo 'export KUBE_CONTROLLER_MANAGER_ARGS="--allocate-node-cidrs"' >> /etc/profile
+```
 
 ### master node
 
 ```console
-dnnnvx@void:~$ sudo kubeadm init --skip-phases mark-control-plane --pod-network-cidr=192.168.1.0/24 --apiserver-advertise-address=192.168.1.150
+$ sudo kubeadm init --skip-phases mark-control-plane --pod-network-cidr=192.168.1.0/24 --apiserver-advertise-address=192.168.1.150
 ```
 
 - `--skip-phases mark-control-plane` 'cause we want to run pods on master node, too.
@@ -49,19 +51,29 @@ When stuck on:
 ... start `kubelet` ([issue](https://github.com/kubernetes/kubeadm/issues/1295#issuecomment-603582361)), the flags are the same as the [systemd conf file](https://github.com/kubernetes/release/blob/master/cmd/kubepkg/templates/latest/deb/kubeadm/10-kubeadm.conf) on a second SSH session:
 
 ```console
-dnnnvx@void:~$ sudo kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --config=/var/lib/kubelet/config.yaml --network-plugin=cni
+$ sudo sv start kubelet kube-controller-manager
 ```
-> You can add these flags to `/etc/sv/kubelet/run` (?).
 
-> If something went wrong, remember to run `sudo kubeadm reset` before trying again.
-
-
-Finish up:
+If you've added the flags in `/etc/sv/kubelet/run`, otherwise:
 
 ```console
-dnnnvx@void:~$ mkdir -p $HOME/.kube
-dnnnvx@void:~$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-dnnnvx@void:~$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+$ sudo kubelet \
+   --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf \
+   --kubeconfig=/etc/kubernetes/kubelet.conf \
+   --config=/var/lib/kubelet/config.yaml \
+   --cni-conf-dir=/etc/cni/net.d \
+   --cni-bin-dir=/opt/cni/bin \
+   --cert-dir=/var/lib/kubelet/pki \
+   --network-plugin=cni
+```
+> If something went wrong, remember to run `sudo kubeadm reset` before trying again.
+
+And finally, as the output suggested:
+
+```console
+$ mkdir -p $HOME/.kube
+$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
 ### Worker node
@@ -69,31 +81,31 @@ dnnnvx@void:~$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 Install the same requirements as the master node, and join the cluster with the given token/certs:
 
 ```console
-dnnnvx@void:~$ kubeadm join 192.168.1.150:6443 --token <TOKEN> --discovery-token-ca-cert-hash <HASH>
+$ kubeadm join 192.168.1.150:6443 --token <TOKEN> --discovery-token-ca-cert-hash <HASH>
 ```
 
-Remember to stop and init manually the `kubelet`.
+Remember to stop and init manually the `kubelet` like in the master node.
 
 ## Post Install
 
 ### Master node: install Helm ([doc](https://helm.sh/docs/intro/install/))
 
 ```console
-dnnnvx@void:~$ cd ~
-dnnnvx@void:~$ curl -O https://get.helm.sh/helm-v3.2.1-linux-amd64.tar.gz
-dnnnvx@void:~$ tar -zxvf helm-v3.2.1-linux-amd64.tar.gz
-dnnnvx@void:~$ sudo mv ./linux-amd64/helm /usr/local/bin/helm
-dnnnvx@void:~$ rm helm-v3.2.1-linux-amd64.tar.gz
-dnnnvx@void:~$ rm -r ./linux-amd64
-dnnnvx@void:~$ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+$ cd ~
+$ curl -O https://get.helm.sh/helm-v3.2.1-linux-amd64.tar.gz
+$ tar -zxvf helm-v3.2.1-linux-amd64.tar.gz
+$ sudo mv ./linux-amd64/helm /usr/local/bin/helm
+$ rm helm-v3.2.1-linux-amd64.tar.gz
+$ rm -rf ./linux-amd64
+$ sudo helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 ```
 
 ### Add Cilium ([doc](https://docs.cilium.io/en/stable/gettingstarted/k8s-install-etcd-operator/#installation-with-managed-etcd))
 
 ```console
-dnnnvx@void:~$ helm repo add cilium https://helm.cilium.io/
-dnnnvx@void:~$ helm repo update
-dnnnvx@void:~$ sudo helm install cilium cilium/cilium --version 1.7.4 \
+$ helm repo add cilium https://helm.cilium.io/
+$ helm repo update
+$ sudo helm install cilium cilium/cilium --version 1.7.4 \
    --namespace kube-system \
    --set global.etcd.enabled=true \
    --set global.etcd.managed=true
@@ -101,6 +113,5 @@ dnnnvx@void:~$ sudo helm install cilium cilium/cilium --version 1.7.4 \
 
 Validate the installation (running pods) with:
 ```console
-dnnnvx@void:~$ kubectl -n kube-system get pods --watch
+$ kubectl --all-namespaces get pods --watch
 ```
-
