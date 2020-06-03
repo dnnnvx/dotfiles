@@ -34,6 +34,7 @@ dnnnvx@void:~$ sudo xbps-remove -Oo
 # Utilities
 - [bash](./docs/scripting.md)
 - [regex](./docs/regex.md)
+- [k8s](./docs/k8s.md)
 
 ## Autologin on startup
 See: [docs](https://wiki.voidlinux.org/Automatic_Login_to_Graphical_Environment)
