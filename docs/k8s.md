@@ -100,7 +100,19 @@ $ rm -rf ./linux-amd64
 $ sudo helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 ```
 
-### Add Cilium ([doc](https://docs.cilium.io/en/stable/gettingstarted/k8s-install-etcd-operator/#installation-with-managed-etcd))
+### Flannel as CNI
+
+```console
+$ curl -sSL https://raw.githubusercontent.com/coreos/flannel/v0.12.0/Documentation/kube-flannel.yml | kubectl apply -f -
+```
+
+### Calico as CNI ([docs](https://docs.projectcalico.org/getting-started/kubernetes/self-managed-onprem/onpremises))
+
+```console
+$ curl -sSL https://docs.projectcalico.org/manifests/calico.yaml | kubectl apply -f -
+```
+
+### Cilium as CNI ([docs](https://docs.cilium.io/en/stable/gettingstarted/k8s-install-etcd-operator/#installation-with-managed-etcd))
 
 ```console
 $ helm repo add cilium https://helm.cilium.io/
@@ -113,5 +125,25 @@ $ sudo helm install cilium cilium/cilium --version 1.7.4 \
 
 Validate the installation (running pods) with:
 ```console
-$ kubectl --all-namespaces get pods --watch
+$ kubectl get pods --all-namespaces -o wide --watch
 ```
+
+## Troubleshooting
+
+```console
+$ kubectl logs --namespace kube-system <POD_NAME>
+```
+
+### Flannel CrashLoopBackOff
+
+If it gives you `Error registering network: failed to acquire lease: node "nuc2" pod cidr not assigned`,
+then `kubectl patch node nuc2 -p '{"spec":{"podCIDR":"192.168.1.0/24"}}'` can help (replace it with your CIDR). Relaunching `kubeadm reset` in the node and rejoin the cluster might help too. Anyway...
+I don't know why it doesn't work in my setup :)
+
+### Cilium
+
+I don't know why it doesn't work in my setup :)
+
+### Calico
+
+I don't know why it doesn't work in my setup :)
