@@ -32,9 +32,11 @@ dnnnvx@void:~$ sudo xbps-remove -Oo
 - [Remixicon Icon Font](https://github.com/Remix-Design/RemixIcon/tree/master/fonts)
 
 # Utilities
+
 - [bash](./docs/scripting.md)
 - [regex](./docs/regex.md)
 - [k8s](./docs/k8s.md)
+- [Raspberry Pi](./docs/rpi.md)
 
 ## Autologin on startup
 See: [docs](https://wiki.voidlinux.org/Automatic_Login_to_Graphical_Environment)
