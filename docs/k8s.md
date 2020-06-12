@@ -12,16 +12,14 @@ $ cd /var/service
 $ ln -s /etc/sv/docker .
 $ ln -sf /etc/sv/kube* .
 $ sudo usermod -aG docker $USER
-$ sudo sv start kube-scheduler kube-apiserver kube-proxy
-$ sudo sv stop kubelet kube-controller-manager
+$ KUBERNETES_SERVICE_PORT=443 && KUBERNETES_SERVICE_HOST=192.168.1.150
+$ sudo sv stop kubelet kube-controller-manager kube-proxy kube-scheduler kube-apiserver
 ```
-
-Cilium requirements ([docs](https://docs.cilium.io/en/stable/kubernetes/requirements/#k8s-requirements)):
 
 CNI, Container Network plugin:
 Make sure to have `--network-plugin=cni` in the kubelet flags.
 
-Mount `BPF` (on all nodes):
+Mount `BPF` (on all nodes) if using Cilium:
 ```console
 $ sudo mount bpffs /sys/fs/bpf -t bpf
 ```
@@ -51,7 +49,7 @@ When stuck on:
 ... start `kubelet` ([issue](https://github.com/kubernetes/kubeadm/issues/1295#issuecomment-603582361)), the flags are the same as the [systemd conf file](https://github.com/kubernetes/release/blob/master/cmd/kubepkg/templates/latest/deb/kubeadm/10-kubeadm.conf) on a second SSH session:
 
 ```console
-$ sudo sv start kubelet kube-controller-manager
+$ sudo sv start kubelet kube-controller-manager kube-proxy kube-scheduler kube-apiserver
 ```
 
 If you've added the flags in `/etc/sv/kubelet/run`, otherwise:
@@ -66,7 +64,6 @@ $ sudo kubelet \
    --cert-dir=/var/lib/kubelet/pki \
    --network-plugin=cni
 ```
-> If something went wrong, remember to run `sudo kubeadm reset` before trying again.
 
 And finally, as the output suggested:
 
@@ -74,6 +71,17 @@ And finally, as the output suggested:
 $ mkdir -p $HOME/.kube
 $ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 $ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+### Reset
+
+If something went wrong, remember to run `sudo kubeadm reset` before trying again. It should be enoguh, but make sure to delete everything manually 'cause kubelet must be stopped manually here.
+```console
+# sv stop kubelet
+# kubeadm reset
+$ cd ~ && rm -r .kube/
+# rm -rf /var/lib/kubelet/* /var/lib/dockershim/* /var/run/kubernetes/* /var/lib/cni/* /etc/cni/net.d/*
+# rm /etc/kubernetes/admin.conf /etc/kubernetes/kubelet.conf /etc/kubernetes/bootstrap-kubelet.conf /etc/kubernetes/controller-manager.conf /etc/kubernetes/scheduler.conf
 ```
 
 ### Worker node
@@ -100,50 +108,26 @@ $ rm -rf ./linux-amd64
 $ sudo helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 ```
 
-### Flannel as CNI
+### Kube-Router as CNI
+
+It seems that the nodes must have the kubeconfig in kube-router lib directory, in the node we can do a symlink.
+Kube-Router create an empty directory if it's not found and it gives you a CrashLoopError.
 
 ```console
-$ curl -sSL https://raw.githubusercontent.com/coreos/flannel/v0.12.0/Documentation/kube-flannel.yml | kubectl apply -f -
+# sudo ln -s ~/.kube/config /var/lib/kube-router/kubeconfig
 ```
 
-### Calico as CNI ([docs](https://docs.projectcalico.org/getting-started/kubernetes/self-managed-onprem/onpremises))
+In the node just copy-paste it (for now, uhm).
 
-```console
-$ curl -sSL https://docs.projectcalico.org/manifests/calico.yaml | kubectl apply -f -
+#### Error in the node's kube-router
+```
+Failed to get pod CIDR from node spec. kube-router relies on kube-controller-manager to allocate pod CIDR for the node or an annotation `kube-router.io/pod-cidr`. Error: node.Spec.PodCIDR not set for node: nuc2
 ```
 
-### Cilium as CNI ([docs](https://docs.cilium.io/en/stable/gettingstarted/k8s-install-etcd-operator/#installation-with-managed-etcd))
+Stuck, for now. :)
 
-```console
-$ helm repo add cilium https://helm.cilium.io/
-$ helm repo update
-$ sudo helm install cilium cilium/cilium --version 1.7.4 \
-   --namespace kube-system \
-   --set global.etcd.enabled=true \
-   --set global.etcd.managed=true
-```
-
-Validate the installation (running pods) with:
-```console
-$ kubectl get pods --all-namespaces -o wide --watch
-```
-
-## Troubleshooting
+## Get Logs
 
 ```console
 $ kubectl logs --namespace kube-system <POD_NAME>
 ```
-
-### Flannel CrashLoopBackOff
-
-If it gives you `Error registering network: failed to acquire lease: node "nuc2" pod cidr not assigned`,
-then `kubectl patch node nuc2 -p '{"spec":{"podCIDR":"192.168.1.0/24"}}'` can help (replace it with your CIDR). Relaunching `kubeadm reset` in the node and rejoin the cluster might help too. Anyway...
-I don't know why it doesn't work in my setup :)
-
-### Cilium
-
-I don't know why it doesn't work in my setup :)
-
-### Calico
-
-I don't know why it doesn't work in my setup :)
