@@ -89,6 +89,7 @@ $ cd ~ && rm -r .kube/
 Install the same requirements as the master node, and join the cluster with the given token/certs:
 
 ```console
+$ KUBERNETES_SERVICE_PORT=443 && KUBERNETES_SERVICE_HOST=192.168.1.150
 $ kubeadm join 192.168.1.150:6443 --token <TOKEN> --discovery-token-ca-cert-hash <HASH>
 ```
 
@@ -117,17 +118,22 @@ Kube-Router create an empty directory if it's not found and it gives you a Crash
 # sudo ln -s ~/.kube/config /var/lib/kube-router/kubeconfig
 ```
 
-In the node just copy-paste it (for now, uhm).
+In the node just copy-paste it (for now).
 
 #### Error in the node's kube-router
+
 ```
 Failed to get pod CIDR from node spec. kube-router relies on kube-controller-manager to allocate pod CIDR for the node or an annotation `kube-router.io/pod-cidr`. Error: node.Spec.PodCIDR not set for node: nuc2
 ```
 
-Stuck, for now. :)
+Fixed by launching:
+
+```console
+$ kubectl patch node <NODE_NAME> -p '{"spec":{"podCIDR":"192.168.1.0/24"}}'
+```
 
 ## Get Logs
 
 ```console
-$ kubectl logs --namespace kube-system <POD_NAME>
+$ kubectl logs -n kube-system <POD_NAME>
 ```
