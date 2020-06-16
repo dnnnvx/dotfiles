@@ -2,7 +2,10 @@
 
 ## Installation
 
-### Requirements
+- Master node at `192.168.1.150`
+- Worker node at `192.168.1.151`
+
+### Requirements (master & worker)
 
 Golang, Docker ([docs](https://wiki.voidlinux.org/Docker)) and k8s ([docs](https://wiki.voidlinux.org/Kubernetes)):
 
@@ -12,34 +15,32 @@ $ cd /var/service
 $ ln -s /etc/sv/docker .
 $ ln -sf /etc/sv/kube* .
 $ sudo usermod -aG docker $USER
-$ KUBERNETES_SERVICE_PORT=443 && KUBERNETES_SERVICE_HOST=192.168.1.150
 $ sudo sv stop kubelet kube-controller-manager kube-proxy kube-scheduler kube-apiserver
 ```
 
-CNI, Container Network plugin:
-Make sure to have `--network-plugin=cni` in the kubelet flags.
-
-Mount `BPF` (on all nodes) if using Cilium:
+Also make sure to have these variables in every node:
 ```console
-$ sudo mount bpffs /sys/fs/bpf -t bpf
+# cat >> /etc/profile <<EOL
+KUBECONFIG=/etc/kubernetes/admin.conf
+KUBERNETES_SERVICE_PORT=443
+KUBERNETES_SERVICE_HOST=192.168.1.150
+EOL
 ```
-> For persistence add `bpffs /sys/fs/bpf bpf defaults 0 0` to `/etc/fstab`.
 
-Remember to use `kube-controller-manager` with `--allocate-node-cidrs` ([recommended](https://docs.cilium.io/en/stable/kubernetes/requirements/#enable-automatic-node-cidr-allocation-recommended)), it seems that `/etc/sv/kube-controller-manager/run` use `$KUBE_CONTROLLER_MANAGER_ARGS`, so you can add them to `/etc/profile`:
+Container Network Plugin (CNI):
+
+- Make sure to have `--network-plugin=cni` in the kubelet flags.
+- Remember to use `kube-controller-manager` with `--allocate-node-cidrs`, it seems that `/etc/sv/kube-controller-manager/run` use `$KUBE_CONTROLLER_MANAGER_ARGS`, so you can add them to `/etc/profile`:
 
 ```console
 # echo 'export KUBE_CONTROLLER_MANAGER_ARGS="--allocate-node-cidrs"' >> /etc/profile
 ```
 
-### master node
+### Master Node
 
 ```console
-$ sudo kubeadm init --skip-phases mark-control-plane --pod-network-cidr=192.168.1.0/24 --apiserver-advertise-address=192.168.1.150
+$ sudo kubeadm init --pod-network-cidr=192.168.1.0/24
 ```
-
-- `--skip-phases mark-control-plane` 'cause we want to run pods on master node, too.
-- `--pod-network-cidr=192.168.1.0/24` our homelab network cidr (usually `192.168.*.*`).
-- `--apiserver-advertise-address=192.168.1.150` our master node IP address.
 
 When stuck on:
 ```
@@ -76,6 +77,7 @@ $ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ### Reset
 
 If something went wrong, remember to run `sudo kubeadm reset` before trying again. It should be enoguh, but make sure to delete everything manually 'cause kubelet must be stopped manually here.
+
 ```console
 # sv stop kubelet
 # kubeadm reset
@@ -84,7 +86,7 @@ $ cd ~ && rm -r .kube/
 # rm /etc/kubernetes/admin.conf /etc/kubernetes/kubelet.conf /etc/kubernetes/bootstrap-kubelet.conf /etc/kubernetes/controller-manager.conf /etc/kubernetes/scheduler.conf
 ```
 
-### Worker node
+### Worker Node
 
 Install the same requirements as the master node, and join the cluster with the given token/certs:
 
@@ -97,7 +99,7 @@ Remember to stop and init manually the `kubelet` like in the master node.
 
 ## Post Install
 
-### Master node: install Helm ([doc](https://helm.sh/docs/intro/install/))
+### Master Node: install Helm ([doc](https://helm.sh/docs/intro/install/))
 
 ```console
 $ cd ~
@@ -120,19 +122,19 @@ Kube-Router create an empty directory if it's not found and it gives you a Crash
 
 In the node just copy-paste it (for now).
 
-#### Error in the node's kube-router
+#### Kube-Router troubleshooting
 
 ```
 Failed to get pod CIDR from node spec. kube-router relies on kube-controller-manager to allocate pod CIDR for the node or an annotation `kube-router.io/pod-cidr`. Error: node.Spec.PodCIDR not set for node: nuc2
 ```
 
-Fixed by launching:
+Fixed by launching (from the master):
 
 ```console
 $ kubectl patch node <NODE_NAME> -p '{"spec":{"podCIDR":"192.168.1.0/24"}}'
 ```
 
-## Get Logs
+## Get Logs ¯\_(ツ)_/¯
 
 ```console
 $ kubectl logs -n kube-system <POD_NAME>
