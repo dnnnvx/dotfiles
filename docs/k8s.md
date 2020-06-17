@@ -1,13 +1,12 @@
-# Kubernetes on Void Linux
+## Kubernetes on Void Linux
 
-## Installation
-
-- Master node at `192.168.1.150`
-- Worker node at `192.168.1.151`
+- Cidr: `192.168.1.0/24`
+- Master node: `192.168.1.150`
+- Worker node: `192.168.1.151`
 
 ### Requirements (master & worker)
 
-Golang, Docker ([docs](https://wiki.voidlinux.org/Docker)) and k8s ([docs](https://wiki.voidlinux.org/Kubernetes)):
+Golang, [Docker](https://wiki.voidlinux.org/Docker) and [K8S](https://wiki.voidlinux.org/Kubernetes):
 
 ```console
 $ sudo xbps-install -S go docker kubernetes gcc conntrack-tools socat
@@ -27,7 +26,7 @@ KUBERNETES_SERVICE_HOST=192.168.1.150
 EOL
 ```
 
-Container Network Plugin (CNI):
+Container Network Plugin (CNI) requirements:
 
 - Make sure to have `--network-plugin=cni` in the kubelet flags.
 - Remember to use `kube-controller-manager` with `--allocate-node-cidrs`, it seems that `/etc/sv/kube-controller-manager/run` use `$KUBE_CONTROLLER_MANAGER_ARGS`, so you can add them to `/etc/profile`:
@@ -47,13 +46,13 @@ When stuck on:
 [wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
 ```
 
-... start `kubelet` ([issue](https://github.com/kubernetes/kubeadm/issues/1295#issuecomment-603582361)), the flags are the same as the [systemd conf file](https://github.com/kubernetes/release/blob/master/cmd/kubepkg/templates/latest/deb/kubeadm/10-kubeadm.conf) on a second SSH session:
+... start `kubelet` ([issue](https://github.com/kubernetes/kubeadm/issues/1295#issuecomment-603582361)), the flags are the same as the [systemd conf file](https://github.com/kubernetes/release/blob/master/cmd/kubepkg/templates/latest/deb/kubeadm/10-kubeadm.conf), on a second SSH session:
 
 ```console
 $ sudo sv start kubelet kube-controller-manager kube-proxy kube-scheduler kube-apiserver
 ```
 
-If you've added the flags in `/etc/sv/kubelet/run`, otherwise:
+The kubelet should start like this (edit the `/etc/sv/kubelet/run`):
 
 ```console
 $ sudo kubelet \
@@ -97,9 +96,37 @@ $ kubeadm join 192.168.1.150:6443 --token <TOKEN> --discovery-token-ca-cert-hash
 
 Remember to stop and init manually the `kubelet` like in the master node.
 
-## Post Install
+### Kube-Router as CNI
 
-### Master Node: install Helm ([doc](https://helm.sh/docs/intro/install/))
+It seems that the nodes must have the kubeconfig in kube-router lib directory, in the node we can do a symlink.
+Kube-Router create an empty directory if it's not found and it gives you a CrashLoopError.
+
+```console
+# mkdir /var/lib/kube-router && ln -s ~/.kube/config /var/lib/kube-router/kubeconfig
+```
+
+In the node just copy-paste it or pass it via sftp (for now).
+
+Add kube-router to the cluster with: `$ kubectl apply -f ` one of [these](https://github.com/cloudnativelabs/kube-router/tree/master/daemonset).
+
+#### Kube-Router error: Failed to get pod CIDR
+```
+Failed to get pod CIDR from node spec. kube-router relies on kube-controller-manager to allocate pod CIDR for the node or an annotation `kube-router.io/pod-cidr`. Error: node.Spec.PodCIDR not set for node: nuc2
+```
+
+Fixed by launching (from the master):
+
+```console
+$ kubectl patch node <NODE_NAME> -p '{"spec":{"podCIDR":"192.168.1.0/24"}}'
+```
+
+### Get Logs ¯\_(ツ)_/¯
+
+```console
+$ kubectl logs -n kube-system <POD_NAME>
+```
+
+### Install [Helm](https://helm.sh/docs/intro/install/) on master node
 
 ```console
 $ cd ~
@@ -111,31 +138,20 @@ $ rm -rf ./linux-amd64
 $ sudo helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 ```
 
-### Kube-Router as CNI
+### Utils & YAML/Config Validators
 
-It seems that the nodes must have the kubeconfig in kube-router lib directory, in the node we can do a symlink.
-Kube-Router create an empty directory if it's not found and it gives you a CrashLoopError.
+- [Polaris](https://github.com/FairwindsOps/polaris)
+- [kubeval](https://github.com/instrumenta/kubeval)
+- [kube-score](https://github.com/zegl/kube-score)
 
-```console
-# sudo ln -s ~/.kube/config /var/lib/kube-router/kubeconfig
-```
+### Next steps:
 
-In the node just copy-paste it (for now).
-
-#### Kube-Router troubleshooting
-
-```
-Failed to get pod CIDR from node spec. kube-router relies on kube-controller-manager to allocate pod CIDR for the node or an annotation `kube-router.io/pod-cidr`. Error: node.Spec.PodCIDR not set for node: nuc2
-```
-
-Fixed by launching (from the master):
-
-```console
-$ kubectl patch node <NODE_NAME> -p '{"spec":{"podCIDR":"192.168.1.0/24"}}'
-```
-
-## Get Logs ¯\_(ツ)_/¯
-
-```console
-$ kubectl logs -n kube-system <POD_NAME>
-```
+- Metallb
+- Istio
+- Kubeless
+- Ipfs
+- Minio
+- Drone.io
+- Longhorn (or rook), utahFS seems interesting
+- Cadvisor
+- Kustomize + Kpt
