@@ -138,20 +138,22 @@ $ rm -rf ./linux-amd64
 $ sudo helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 ```
 
-### Utils & YAML/Config Validators
+### Validators and security utilities
 
-- [Polaris](https://github.com/FairwindsOps/polaris)
-- [kubeval](https://github.com/instrumenta/kubeval)
-- [kube-score](https://github.com/zegl/kube-score)
+- [Polaris](https://github.com/FairwindsOps/polaris): validation of best practices in your Kubernetes clusters.
+- [kubeval](https://github.com/instrumenta/kubeval): Kubernetes configuration files validator.
+- [kube-score](https://github.com/zegl/kube-score): object analysis with recommendations for improved reliability and security.
+- [kube-bench](https://github.com/aquasecurity/kube-bench): checks whether Kubernetes is deployed according to security best practices.
+- [kube-hunter](https://github.com/aquasecurity/kube-hunter): hunt for security weaknesses in Kubernetes clusters.
 
 ### Next steps:
 
-- Metallb
-- Istio
-- Kubeless
-- Ipfs
-- Minio
-- Drone.io
-- Longhorn (or rook), utahFS seems interesting
-- Cadvisor
-- Kustomize + Kpt
+- [Metallb](https://metallb.universe.tf/installation/): a network load-balancer implementation.
+- [Istio](https://istio.io/latest/docs/): service mesh / ingress /gateway.
+- [Kubeless](https://kubeless.io/docs/quick-start/): Kubernetes Native Serverless Framework.
+- [Ipfs](https://cluster.ipfs.io/documentation/guides/k8s/): a peer-to-peer hypermedia protocol.
+- [Minio](https://docs.min.io/docs/deploy-minio-on-kubernetes.html): Kubernetes Native Object Storage (S3 compatible).
+- [Drone.io](https://docs.drone.io/runner/kubernetes/overview/): a Continuous Delivery platform.
+- [Longhorn](https://github.com/longhorn/longhorn) (or [Rook/Ceph](https://rook.io/docs/rook/v1.3/ceph-storage.html), [UtahFS](https://github.com/cloudflare/utahfs)): cloud storage solutions. 
+- [Cadvisor](https://github.com/google/cadvisor): get usage and performance characteristics of running containers.
+- [Kustomize](https://kubernetes-sigs.github.io/kustomize/guides/offtheshelf/) + [Kpt](https://googlecontainertools.github.io/kpt/guides/ecosystem/): configurations management.
