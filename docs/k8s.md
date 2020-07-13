@@ -1,10 +1,10 @@
-## Kubernetes on Void Linux
+# Kubernetes on Void Linux
 
 - Cidr: `192.168.1.0/24`
 - Master node: `192.168.1.150`
 - Worker node: `192.168.1.151`
 
-### Requirements (master & worker)
+#### Requirements (master & worker)
 
 Golang, [Docker](https://wiki.voidlinux.org/Docker) and [K8S](https://wiki.voidlinux.org/Kubernetes):
 
@@ -35,7 +35,7 @@ Container Network Plugin (CNI) requirements:
 # echo 'export KUBE_CONTROLLER_MANAGER_ARGS="--allocate-node-cidrs"' >> /etc/profile
 ```
 
-### Master Node
+#### Master Node
 
 ```console
 $ sudo kubeadm init --pod-network-cidr=192.168.1.0/24
@@ -73,7 +73,7 @@ $ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 $ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-### Reset
+#### Reset
 
 If something went wrong, remember to run `sudo kubeadm reset` before trying again. It should be enoguh, but make sure to delete everything manually 'cause kubelet must be stopped manually here.
 
@@ -85,7 +85,7 @@ $ cd ~ && rm -r .kube/
 # rm /etc/kubernetes/admin.conf /etc/kubernetes/kubelet.conf /etc/kubernetes/bootstrap-kubelet.conf /etc/kubernetes/controller-manager.conf /etc/kubernetes/scheduler.conf
 ```
 
-### Worker Node
+#### Worker Node
 
 Install the same requirements as the master node, and join the cluster with the given token/certs:
 
@@ -96,7 +96,7 @@ $ kubeadm join 192.168.1.150:6443 --token <TOKEN> --discovery-token-ca-cert-hash
 
 Remember to stop and init manually the `kubelet` like in the master node.
 
-### Kube-Router as CNI
+#### Kube-Router as CNI
 
 It seems that the nodes must have the kubeconfig in kube-router lib directory, in the node we can do a symlink.
 Kube-Router create an empty directory if it's not found and it gives you a CrashLoopError.
@@ -120,13 +120,13 @@ Fixed by launching (from the master):
 $ kubectl patch node <NODE_NAME> -p '{"spec":{"podCIDR":"192.168.1.0/24"}}'
 ```
 
-### Get Logs ¯\_(ツ)_/¯
+#### Get Logs ¯\_(ツ)_/¯
 
 ```console
 $ kubectl logs -n kube-system <POD_NAME>
 ```
 
-### Install [Helm](https://helm.sh/docs/intro/install/) on master node
+#### Install [Helm](https://helm.sh/docs/intro/install/) on master node
 
 ```console
 $ cd ~
@@ -138,7 +138,7 @@ $ rm -rf ./linux-amd64
 $ sudo helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 ```
 
-### Validators and security utilities
+#### Validators and security utilities
 
 - [Polaris](https://github.com/FairwindsOps/polaris): validation of best practices in your Kubernetes clusters.
 - [kubeval](https://github.com/instrumenta/kubeval): Kubernetes configuration files validator.
@@ -146,7 +146,7 @@ $ sudo helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 - [kube-bench](https://github.com/aquasecurity/kube-bench): checks whether Kubernetes is deployed according to security best practices.
 - [kube-hunter](https://github.com/aquasecurity/kube-hunter): hunt for security weaknesses in Kubernetes clusters.
 
-### Next steps:
+#### Next steps:
 
 - [Metallb](https://metallb.universe.tf/installation/): a network load-balancer implementation.
 - [Istio](https://istio.io/latest/docs/): service mesh / ingress /gateway.

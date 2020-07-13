@@ -1,4 +1,4 @@
-## Logging ([docs](https://docs.voidlinux.org/config/services/logging.html))
+### Logging ([docs](https://docs.voidlinux.org/config/services/logging.html))
 
 ```console
 dnnnvx@void:~$ sudo vpm install socklog-void
@@ -8,7 +8,7 @@ dnnnvx@void:~$ sudo usermod -a -G socklog $USER
 dnnnvx@void:~$ sudo socklogtail
 ```
 
-## A little bit of hardening ([src](https://vez.mrsk.me/linux-hardening.html))
+### A little bit of hardening ([src](https://vez.mrsk.me/linux-hardening.html))
 
 - In `/etc/sudoers`:
 
@@ -54,7 +54,7 @@ COMPRESSION="xz"
 COMPRESSION_OPTIONS=(-0 -T 0)
 ```
 
-#### Audio (Desktop or RPi setup) 
+#### Audio (Desktop or RPi setup)
 
 - In `/home/user/.config/pulse/daemon.conf`:
 

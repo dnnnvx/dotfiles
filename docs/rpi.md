@@ -2,7 +2,7 @@
 
 [Doc](https://wiki.voidlinux.org/Raspberry_Pi) | [General Hints](https://elinux.org/RPi_Hub) | [Nice Post](https://blog.kevindirect.com/post/20191109_nine-steps-to-void-linux-on-rpi/)
 
-## Preparing the SD Card
+#### Preparing the SD Card
 
 ```console
 $ sudo parted /dev/sda
@@ -15,7 +15,7 @@ $ sudo mkfs.vfat /dev/sda1
 $ sudo mkfs.ext4 -O '^has_journal' /dev/sda2
 ```
 
-## Preparing target rootfs directory
+#### Preparing target rootfs directory
 
 ```console
 $ mkdir rootfs
@@ -27,9 +27,9 @@ $ mkdir rootfs
 # echo '/dev/mmcblk0p1 /boot vfat defaults 0 0' >> rootfs/etc/fstab
 ```
 
-## First Boot
+### First Boot
 
-### Setup
+#### Setup
 
 ```console
 $ bash # for mental health's sake
@@ -41,7 +41,7 @@ $ echo <HOSTNAME> > /etc/hostname
 
 > Uncomment `# %wheel ALL=(ALL) ALL` in `/etc/sudoers` to give permissions
 
-### Connection Setup
+#### Connection Setup
 
 ```console
 $ cp /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
@@ -54,7 +54,7 @@ $ sudo cat >>/etc/dhcpcd.conf <<EOL
 > EOL
 ```
 
-### Services
+#### Services
 
 ```console
 $ sudo ln -s /etc/sv/ntpd /var/service
@@ -66,7 +66,7 @@ $ sudo xbps-reconfigure -f chrony # for ntpd
 
 > Remove unused TTY with `sudo rm /var/service/agetty-tty{N}` and `sudo touch /etc/sv/agetty-tty{N}/down`
 
-### Tweaks
+#### Tweaks
 
 - On `/boot/cmdline.txt`
 
@@ -80,15 +80,15 @@ $ sudo xbps-reconfigure -f chrony # for ntpd
 # echo -e "\ndtparam=i2c_arm=on" > /boot/config.txt # i2c
 ```
 
-### Others
+#### Others
 
 - Modify the kbd layout and other options in `/etc/rc.conf`
 - Create `/etc/modules-load.d/i2c.conf` and add `echo i2c-dev >> /etc/modules-load.d/i2c.conf`
 - Reboot! `sudo reboot`
 
-## Second Boot
+### Second Boot
 
-### Update & install
+#### Update & install
 ```console
 $ sudo xbps-install -Su
 $ sudo xbps-install -Oo
@@ -96,7 +96,7 @@ $ sudo xbps-install vim git htop vpm i2c-tools
 $ ssh-keygen # create a key pair
 ```
 
-### Golang (with [periph.io](https://periph.io/))
+#### Golang (with [periph.io](https://periph.io/))
 
 ```console
 $ sudo vpm install gcc go htop

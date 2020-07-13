@@ -2,14 +2,14 @@
 [source](https://refrf.shreyasminocha.me/)
 [Awesome List](https://github.com/aloisdg/awesome-regex)
 
-## Javascript comments
+#### Javascript comments
 ```
 /\/\*[\s\S]*?\*\/|\/\/.*/g
 ```
 - const a = 0; **// comment**
 - **/\* multiline \*/**
 
-## 24-Hour Time
+#### 24-Hour Time
 ```
 /^([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/g
 ```
@@ -19,7 +19,7 @@
 - 29:00
 - 32:32
 
-## Meta
+#### Meta
 
 ```
 /<Example source="(.*?)" flags="(.*?)">/gm
@@ -30,7 +30,7 @@
 - `<Example source='s+$' flags='gm'>`
 - `</Example>`
 
-## Floating point numbers
+#### Floating point numbers
 (optional sign, optional integer part, optional decimal part, optional exponent part)
 ```
 /^([+-]?(?=\.\d|\d)(?:\d+)?(?:\.?\d*))(?:[eE]([+-]?\d+))?
@@ -49,7 +49,7 @@
 - **+4e-1**
 - **-8.e+2**
 
-## Latitude and Longitude
+#### Latitude and Longitude
 
 ```
 /^((-?|\+?)?\d+(\.\d+)?),\s*((-?|\+?)?\d+(\.\d+)?)$/g
@@ -64,7 +64,7 @@
 - -90., -180.
 - .004, .15
 
-## MAC Addresses
+#### MAC Addresses
 ```
 /^[a-f0-9]{2}(:[a-f0-9]{2}){5}$/i
 ```
@@ -75,7 +75,7 @@
 - 9:3:23:85:D8:C2
 - ac::23:85:D8:C2
 
-## UUID
+#### UUID
 ```
 /[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}/i
 ```
@@ -85,7 +85,7 @@
 - c73bcdcc-2669-4bf6-81d3-e4an73fb11fd
 - c73bcdcc26694bf681d3e4ae73fb11fd
 
-## IP Addresses
+#### IP Addresses
 ```
 /\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b/g
 ```
@@ -97,7 +97,7 @@
 - 123.123.123.256
 - 0.0.x.0
 
-## HSL colours
+#### HSL colours
 Integers from 0 to 360
 - 360
 - 300 to 359 — 3, [0 - 5], any digit
@@ -114,7 +114,7 @@ Integers from 0 to 360
 - 361
 - 404
 
-## Percentages
+#### Percentages
 ```
 /^(?:100(?:\.0+)?|\d?\d(?:\.\d+)?)%$/g
 ```

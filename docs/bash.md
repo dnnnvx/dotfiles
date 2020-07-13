@@ -1,16 +1,16 @@
-# Scripting
+# Bash Scripting
 [source](https://dev.to/godcrampy/the-missing-shell-scripting-crash-course-37mk)
 
-## First of all
+#### First of all
 `#!/bin/env bash`
 
-## Get a prompt value
+#### Get a prompt value
 ```bash
 read -p "What's your name? " name
 echo "Hello, $name"
 ```
 
-## Get arguments
+#### Get arguments
 ```bash
 echo $0 # this is "./start.sh"
 echo $1
@@ -24,7 +24,7 @@ do
 done
 ```
 
-## Variable Length / Exist
+#### Variable Length / Exist
 ```bash
 [[ -e "$file" ]] # True if file exists
 [[ -d "$file" ]] # True if file exists and is a directory
@@ -33,13 +33,13 @@ done
 [[ -n "$str" ]]  # True is string is not of length zero
 ```
 
-## Compare Strings
+#### Compare Strings
 ```bash
 [[ "$str1" == "$str2" ]]
 [[ "$str1" != "$str2" ]]
 ```
 
-## Integer Comparisions
+#### Integer Comparisions
 ```bash
 [[ "$int1" -eq "$int2" ]] # $int1 == $int2
 [[ "$int1" -ne "$int2" ]] # $int1 != $int2
@@ -49,14 +49,14 @@ done
 [[ "$int1" -le "$int2" ]] # $int1 <= $int2
 ```
 
-## And / Or
+#### And / Or
 ```bash
 [[ ... ]] && [[ ... ]] # And
 [[ ... ]] || [[ ... ]] # Or
 ```
 
 
-## Return values
+#### Return values
 ```bash
 # If notes.md file doesn't exist, create one and 
 # add the text "created by bash"
@@ -68,7 +68,7 @@ else
 fi
 ```
 
-## Arithmetic Evaluations
+#### Arithmetic Evaluations
 ```bash
 read -p "Enter your age: " age
 if (( "$age" > 18 ))
@@ -82,7 +82,7 @@ else
 fi
 ```
 
-## Test Expressions
+#### Test Expressions
 ```bash
 # Check if argument was passed
 # "$1" corresponds to first argument
@@ -94,7 +94,7 @@ else
 fi
 ```
 
-## Loops
+#### Loops
 ```bash
 # c like for loop
 for (( i = 1; i <= 10; ++i ))
@@ -125,7 +125,7 @@ do
 done
 ```
 
-# Arrays
+### Arrays
 ```bash
 # Arrays are declared using parenthesis without commas between elements.
 # ${#arr[@]} returns the length of the array.
@@ -163,7 +163,7 @@ do
 done
 ```
 
-## Functions
+#### Functions
 ```bash
 greet() {
   echo "Hello, $1"
@@ -176,7 +176,7 @@ greetEveryone() {
 greetEveryone every single body # Hello, every single body
 ```
 
-## Strip
+#### Strip
 ```bash
 # Strip variable informations (file extensions, ...)
 A=abc123foo.txt
