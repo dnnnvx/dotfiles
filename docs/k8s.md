@@ -120,12 +120,6 @@ Fixed by launching (from the master):
 $ kubectl patch node <NODE_NAME> -p '{"spec":{"podCIDR":"192.168.1.0/24"}}'
 ```
 
-#### Get Logs ¯\_(ツ)_/¯
-
-```console
-$ kubectl logs -n kube-system <POD_NAME>
-```
-
 #### Install [Helm](https://helm.sh/docs/intro/install/) on master node
 
 ```console
@@ -157,3 +151,72 @@ $ sudo helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 - [Longhorn](https://github.com/longhorn/longhorn) (or [Rook/Ceph](https://rook.io/docs/rook/v1.3/ceph-storage.html), [UtahFS](https://github.com/cloudflare/utahfs)): cloud storage solutions. 
 - [Cadvisor](https://github.com/google/cadvisor): get usage and performance characteristics of running containers.
 - [Kustomize](https://kubernetes-sigs.github.io/kustomize/guides/offtheshelf/) + [Kpt](https://googlecontainertools.github.io/kpt/guides/ecosystem/): configurations management.
+
+# Kubernetes with Debian 10 (from mini.iso)
+
+```console
+$ sudo vim /etc/apt/sources.list # add non-free
+$ sudo apt update && sudo apt upgrade
+$ sudo apt install vim git htop firmware-iwlwifi firmware-realtek
+$ sudo modprobe -r iwlwifi ; sudo modprobe iwlwifi
+$ su -l -c "<SSID> <PWD>" > /etc/wpa_supplicant/wpa_supplicant.conf
+$ sudo systemctl reenable wpa_supplicant.service
+$ sudo systemctl restart wpa_supplicant.service
+$ sudo vim /etc/network/interfaces
+$ ifup wlo2
+$ ifdown eno1
+$ alias sctl="sudo systemctl"
+$ sudo swapoff -a
+$ sudo modprobe br_netfilter
+$ cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+$ sudo sysctl --system
+$ sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+$ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+$ sudo apt update
+$ sudo apt install docker-ce docker-ce-cli containerd.io
+$ sudo apt update && sudo apt-get install -y apt-transport-https curl
+$ sudo update-alternatives --config iptables
+$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+$ cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+$ cat > /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+$ sctl restart docker
+$ sudo apt update && sudo apt install -y kubelet kubeadm kubectl
+$ sctl enable kubelet
+$ sudo apt-mark hold kubelet kubeadm kubectl
+$ export KUBELET_CONFIG_ARGS=--network-plugin=cni
+$ export KUBERNETES_SERVICE_HOST=192.168.1.101
+$ export KUBE_CONTROLLER_MANAGER_ARGS=--allocate-node-cidrs
+$ sudo kubeadm init --pod-network-cidr=192.168.1.0/24
+$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+$ mount | grep /sys/fs/bpf
+$ kubectl taint nodes --all node-role.kubernetes.io/master-
+$ kubectl taint nodes --all node.kubernetes.io/not-ready:NoSchedule-
+$ kubectl create -f https://raw.githubusercontent.com/cilium/cilium/v1.8/install/kubernetes/quick-install.yaml
+$ kubectl create -f https://github.com/kubeless/kubeless/releases/download/v1.0.7/kubeless-v1.0.7.yaml
+$ kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-dashboard | awk '{print $1}')
+$ sudo apt install open-iscsi
+$ git clone https://github.com/longhorn/longhorn
+$ kubectl create namespace longhorn-system
+$ helm install longhorn ./longhorn/chart/ --namespace longhorn-system
+$ helm repo add minio https://helm.min.io/
+$ kubectl create namespace minio
+$ helm install --namespace minio --generate-name minio/minio
+$ kubectl create namespace drone
+$ helm install --namespace drone drone drone/drone -f drone-values.yaml
+```
