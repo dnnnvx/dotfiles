@@ -27,7 +27,7 @@ dnnnvx@void:~$ sudo xbps-remove -Oo
 - [Remixicon Icon Font](https://github.com/Remix-Design/RemixIcon/tree/master/fonts)
 
 #### Go
-- [gotop](https://github.com/cjbassi/gotop)
+- [duf](https://github.com/muesli/duf)
 - [fzf](https://github.com/junegunn/fzf)
 
 ### Utilities
