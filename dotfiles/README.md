@@ -6,8 +6,8 @@ Dot 👽 Dot 🦎
 ```console
 dnnnvx@void:~$ sudo xbps-install -Su
 dnnnvx@void:~$ sudo xbps-install xorg-minimal xinit xf86-video-amdgpu
-dnnnvx@void:~$ sudo xbps-install base-devel git dbus ncdu bat obs hyperfine vscode alacritty telegram-desktop pulseaudio pcmanfm lmms tig p7zip docker pfetch neofetch chromium firefox fontconfig noto-fonts-ttf noto-fonts-emoji blender android-studio cava parted fish-shell gimp audacity godot htop powertop synfigstudio picom vlc aws-cli tree shellcheck papirus-icon-theme font-iosevka
-dnnnvx@void:~$ sudo usermod -aG input,video,docker,kvm $USER
+dnnnvx@void:~$ sudo xbps-install base-devel git dbus ncdu bat obs hyperfine vscode alacritty telegram-desktop pulseaudio lmms tig p7zip docker pfetch neofetch chromium firefox fontconfig dejavu-fonts-ttf noto-fonts-ttf noto-fonts-emoji blender cava parted fish-shell gimp godot htop powertop synfigstudio picom vlc aws-cli tree shellcheck
+dnnnvx@void:~$ sudo usermod -aG input,video,libvirt,docker,kvm $USER
 dnnnvx@void:~$ sudo xbps-remove -Oo
 ```
 
@@ -22,9 +22,10 @@ dnnnvx@void:~$ sudo xbps-remove -Oo
 - [Flutter/Dart](https://flutter.dev/docs/get-started/install/linux)
 - [Fisher](https://github.com/jorgebucaran/fisher)
 - [Fish-nvm](https://github.com/jorgebucaran/fish-nvm)
-- [Kripton Theme](https://www.gnome-look.org/p/1365372/)
+- [LinMOS Theme](https://www.gnome-look.org/p/1447933/)
 - [JetBrains Mono Font](https://www.jetbrains.com/lp/mono/)
-- [Remixicon Icon Font](https://github.com/Remix-Design/RemixIcon/tree/master/fonts)
+- [Iosevka Fonts (SS12)](https://github.com/be5invis/Iosevka/releases)
+- [Atkinson Hyperlegible Font](https://fontesk.com/atkinson-hyperlegible-font/)
 
 #### Go
 - [duf](https://github.com/muesli/duf)
