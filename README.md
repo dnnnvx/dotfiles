@@ -5,6 +5,7 @@
 - [Raspberry Pi Void Setup](./docs/rpi.md)
 - [General Utilities (logging, hardening)](./docs/utils.md)
 - [Basic vim guide](./docs/vim.md)
+- [Basic tmux guide](./docs/tmux.md)
 - [Basic bash guide](./docs/bash.md)
 - [Basic regex guide](./docs/regex.md)
 - [Basic jq guide](./docs/jq.md)
