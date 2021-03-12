@@ -2,68 +2,79 @@
 
 Dot 👽 Dot 🦎
 
-#### xbps-install
+## Packages
+
+> But first: update/upgrade repo with `sudo xbps-install -Su`
+
+### Base
+
+| Package Name | Description | Link   |
+|--------------|-------------|--------|
+| xorg-minimal | Display server                      | [Github](https://github.com/freedesktop/xorg-xserver) |
+| xinit        | X server & client startup utilities | [Gitlab](https://gitlab.freedesktop.org/xorg/app/xinit) |
+| xf86-video-amdgpu | AMD Xorg video driver          | [Github](https://github.com/freedesktop/xorg-xf86-video-amdgpu) |
+| base-devel   | Dev-tools meta package              | [Pkg](https://github.com/void-linux/void-packages/blob/master/srcpkgs/base-devel/template) |
+| git          | Interactive process viewer          | [Github](https://github.com/git/git) |
+| vim          | Terminal editor                     | [Github](https://github.com/vim/vim) |
+| dbus         | IPC mechanism                       | [Github](https://github.com/freedesktop/dbus) |
+| tree         | List contents in a tree-like format | [Manpage](https://linux.die.net/man/1/tree) |
+| htop         | Interactive process viewer          | [Github](https://github.com/htop-dev/htop) |
+| fish-shell   | Command line shell                  | [Github](https://github.com/fish-shell/fish-shell) |
+| pulseaudio   | Sound server                        | [Github](https://github.com/pulseaudio/pulseaudio) |
+| alacritty    | OpenGL terminal emulator            | [Github](https://github.com/alacritty/alacritty) |
+| docker       | Container ecosystem                 | [Github](https://github.com/moby/moby) |
+
+### Tools
+
+| Package Name | Description | Link   |
+|--------------|-------------|--------|
+| ncdu | Disk utilty | [Site](https://dev.yorhel.nl/ncdu) |
+| bat | Cat alternative | [Github](https://github.com/sharkdp/bat) |
+| hexyl | TUI binary viewer | [Github](https://github.com/sharkdp/hexyl) |
+| hyperfine | Command-line benchmarking tool | [Github](https://github.com/sharkdp/hyperfine) |
+| shellcheck | Static analysis tool for shell scripts | [Github](https://github.com/koalaman/shellcheck) |
+| p7zip | Command line version of 7zip | [Sourceforge](https://sourceforge.net/projects/p7zip/) |
+| tig | Text-mode interface for git | [Sourceforge](https://github.com/jonas/tig) |
+| parted | Manipulate partition tables | [Site](https://savannah.gnu.org/git/?group=parted) |
+| aws-cli | Command Line Interface for AWS | [Github](https://github.com/aws/aws-cli) |
+| vpm | package management helper for Void Linux | [Github](https://github.com/netzverweigerer/vpm) |
+
+### Applications & others
+
+| Package Name | Description | Link   |
+|--------------|-------------|--------|
+| dejavu-fonts-ttf | Dejavu font | [Site](https://dejavu-fonts.github.io/) |
+| noto-fonts-ttf   | Noto font | [Site](https://www.google.com/get/noto/) |
+| noto-fonts-emoji | Noto emoji font | [Site](https://www.google.com/get/noto/) |
+| fontconfig       | Font configuration and customization | [Gitlab](https://gitlab.freedesktop.org/fontconfig/fontconfig) |
+| chromium | Chromium web browser | [Site](https://www.chromium.org/Home) |
+| firefox | Firefox web browser | [Site](https://www.mozilla.org/en-US/firefox/new/) |
+| vscode | VS Code without branding/telemetry/licensing | [Github](https://github.com/VSCodium/vscodium) |
+| lmms | Music production software | [Github](https://github.com/LMMS/lmms) |
+| obs | Live streaming and screen recording | [Github](https://github.com/obsproject/obs-studio) |
+| blender | 3D creation suite | [Github](https://github.com/blender/blender) |
+| gimp | Image editor | [Site](https://www.gimp.org/) |
+| godot | Game engine | [Site](https://godotengine.org/) |
+| synfigstudio | 2D Animation Software | [Site](https://www.synfig.org/) |
+| vlc | Media player | [Gitlab](https://code.videolan.org/videolan/vlc) |
+| telegram-desktop | Messaging app | [Github](https://github.com/telegramdesktop/tdesktop) |
+
 ```console
-dnnnvx@void:~$ sudo xbps-install -Su
-dnnnvx@void:~$ sudo xbps-install xorg-minimal xinit xf86-video-amdgpu
-dnnnvx@void:~$ sudo xbps-install base-devel git dbus ncdu bat obs hyperfine vscode alacritty telegram-desktop pulseaudio lmms tig p7zip docker pfetch neofetch chromium firefox fontconfig dejavu-fonts-ttf noto-fonts-ttf noto-fonts-emoji blender cava parted fish-shell gimp godot htop powertop synfigstudio picom vlc aws-cli tree shellcheck
-dnnnvx@void:~$ sudo usermod -aG input,video,libvirt,docker,kvm $USER
-dnnnvx@void:~$ sudo xbps-remove -Oo
+$ sudo usermod -aG input,video,libvirt,docker,kvm $USER
+$ sudo xbps-remove -Oo
 ```
+## Other installations
 
-#### Git:
-- [bashtop](https://github.com/aristocratos/bashtop)
-- [bspwm](https://github.com/baskerville/bspwm)
-- [sxhkd](https://github.com/baskerville/sxhkd)
-
-#### Others:
-- [Go](https://golang.org/dl/)
-- [Brew](https://brew.sh/)
-- [Flutter/Dart](https://flutter.dev/docs/get-started/install/linux)
-- [Fisher](https://github.com/jorgebucaran/fisher)
-- [Fish-nvm](https://github.com/jorgebucaran/fish-nvm)
-- [LinMOS Theme](https://www.gnome-look.org/p/1447933/)
-- [JetBrains Mono Font](https://www.jetbrains.com/lp/mono/)
-- [Iosevka Fonts (SS12)](https://github.com/be5invis/Iosevka/releases)
-- [Atkinson Hyperlegible Font](https://fontesk.com/atkinson-hyperlegible-font/)
-
-#### Go
-- [duf](https://github.com/muesli/duf)
-- [fzf](https://github.com/junegunn/fzf)
-- [dasel](https://github.com/TomWright/dasel)
-
-### Utilities
-
-#### Autologin on startup
-See: [docs](https://wiki.voidlinux.org/Automatic_Login_to_Graphical_Environment)
-```console
-dnnnvx@void:~$ sudo cp -R /etc/sv/agetty-tty1 /etc/sv/agetty-autologin-tty1
-dnnnvx@void:~$ sudo echo >> /etc/sv/agetty-autologin-tty1/conf "GETTY_ARGS=\"--autologin $USER --noclear\"
-  BAUD_RATE=38400
-  TERM_NAME=linux"
-```
-Logout, login, and:
-```console
-dnnnvx@void:~$ sudo rm /var/service/agetty-tty1
-dnnnvx@void:~$ sudo ln -s /etc/sv/agetty-autologin-tty1 /var/service
-```
-
-#### Auto xinit w/ fish
-In `~/.config/fish/config.fish` there's:
-```
-#set -l tty (fgconsole)
-if test -z $DISPLAY
-  #and [ tty = 1 ]
-  exec startx
-end
-```
-
-> In general, use `~/.config/fish/config.fish` for any ".profile" configuration
-
-#### Create Pulseaudio module for OBS
-(Assume that with listing `short links` 3 is the null one and 2 is the default)
-```console
-dnnnvx@void:~$ pactl load-module module-null-sink
-dnnnvx@void:~$ pactl list short sinks
-dnnnvx@void:~$ pactl load-module module-combine-sink sink_name=OBScombine slaves=3,2
-```
+| Tool                       | Description | Link   |
+|----------------------------|-------------|--------|
+| Go                         | The Go programming language | [Site](https://golang.org/dl/) |
+| Brew                       | Brew package manager | [Site](https://brew.sh/) |
+| Dart / Flutter             | Dart language and Flutter framework | [Site](https://flutter.dev/docs/get-started/install/linux) |
+| Android Studio             | IDE | [Site](https://developer.android.com/studio) |
+| Fisher                     | Fish shell plugins | [Github](https://github.com/jorgebucaran/fisher) |
+| Fish-nvm                   | Node version manager | [Github](https://github.com/jorgebucaran/fish-nvm) |
+| duf                        | Disk utility | [Github](https://github.com/muesli/duf) |
+| fzf                        | Fuzzy finder | [Github](https://github.com/junegunn/fzf) |
+| JetBrains Mono Font        | JetBrains font| [Site](https://www.jetbrains.com/lp/mono/) |
+| Iosevka Font (SS12)        | Iosevka font | [Github](https://github.com/be5invis/Iosevka/releases) |
+| Atkinson Hyperlegible Font | Atkinson font | [Site](https://fontesk.com/atkinson-hyperlegible-font/) |

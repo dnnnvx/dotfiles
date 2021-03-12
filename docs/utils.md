@@ -1,14 +1,14 @@
-### Logging ([docs](https://docs.voidlinux.org/config/services/logging.html))
+# Logging ([docs](https://docs.voidlinux.org/config/services/logging.html))
 
 ```console
-dnnnvx@void:~$ sudo vpm install socklog-void
-dnnnvx@void:~$ sudo ln -s /etc/sv/socklog-unix /var/service
-dnnnvx@void:~$ sudo ln -s /etc/sv/nanoklogd /var/service
-dnnnvx@void:~$ sudo usermod -a -G socklog $USER
-dnnnvx@void:~$ sudo socklogtail
+$ sudo vpm install socklog-void
+$ sudo ln -s /etc/sv/socklog-unix /var/service
+$ sudo ln -s /etc/sv/nanoklogd /var/service
+$ sudo usermod -a -G socklog $USER
+$ sudo socklogtail
 ```
 
-### A little bit of hardening ([src](https://vez.mrsk.me/linux-hardening.html))
+# Hardening ([src](https://vez.mrsk.me/linux-hardening.html)) & helpers
 
 - In `/etc/sudoers`:
 
@@ -54,7 +54,7 @@ COMPRESSION="xz"
 COMPRESSION_OPTIONS=(-0 -T 0)
 ```
 
-#### Audio (Desktop or RPi setup)
+## Audio
 
 - In `/home/user/.config/pulse/daemon.conf`:
 
@@ -67,4 +67,38 @@ avoid-resampling = yes
 default-sample-format = float32le
 default-sample-rate = 44100
 alternate-sample-rate = 96000
+```
+
+### Autologin on startup
+See: [docs](https://wiki.voidlinux.org/Automatic_Login_to_Graphical_Environment)
+```console
+$ sudo cp -R /etc/sv/agetty-tty1 /etc/sv/agetty-autologin-tty1
+$ sudo echo >> /etc/sv/agetty-autologin-tty1/conf "GETTY_ARGS=\"--autologin $USER --noclear\"
+  BAUD_RATE=38400
+  TERM_NAME=linux"
+```
+Logout, login, and:
+```console
+$ sudo rm /var/service/agetty-tty1
+$ sudo ln -s /etc/sv/agetty-autologin-tty1 /var/service
+```
+
+### Auto xinit w/ fish
+In `~/.config/fish/config.fish`:
+```
+#set -l tty (fgconsole)
+if test -z $DISPLAY
+  #and [ tty = 1 ]
+  exec startx
+end
+```
+
+> In general, use `~/.config/fish/config.fish` for any ".profile" configuration
+
+### Create Pulseaudio module for OBS
+(Assume that with listing `short links` 3 is the null one and 2 is the default)
+```console
+$ pactl load-module module-null-sink
+$ pactl list short sinks
+$ pactl load-module module-combine-sink sink_name=OBScombine slaves=3,2
 ```
