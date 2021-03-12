@@ -74,6 +74,9 @@ $ sudo xbps-remove -Oo
 | Brew                       | Brew package manager | [Site](https://brew.sh/) |
 | Dart / Flutter             | Dart language and Flutter framework | [Site](https://flutter.dev/docs/get-started/install/linux) |
 | Android Studio             | IDE | [Site](https://developer.android.com/studio) |
+| Gitg                       | Gnome gui client git repositories | [Site](https://wiki.gnome.org/Apps/Gitg/) |
+| Ghex                       | Gnome hex editor | [Site](https://wiki.gnome.org/Apps/Ghex) |
+| Vital Audio                | Spectral warping wavetable synth | [Site](https://vital.audio/) |
 | Fisher                     | Fish shell plugins | [Github](https://github.com/jorgebucaran/fisher) |
 | Fish-nvm                   | Node version manager | [Github](https://github.com/jorgebucaran/fish-nvm) |
 | duf                        | Disk utility | [Github](https://github.com/muesli/duf) |
