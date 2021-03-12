@@ -4,7 +4,7 @@ Dot 👽 Dot 🦎
 
 ## Packages
 
-> But first: update/upgrade repo with `sudo xbps-install -Su`
+> Update/upgrade all with `sudo xbps-install -Su`
 
 ### Base
 
@@ -38,6 +38,7 @@ Dot 👽 Dot 🦎
 | parted       | Manipulate partition tables | [Site](https://savannah.gnu.org/git/?group=parted) |
 | aws-cli      | Command Line Interface for AWS | [Github](https://github.com/aws/aws-cli) |
 | vpm          | package management helper for Void Linux | [Github](https://github.com/netzverweigerer/vpm) |
+| termshark    | Terminal UI for tshark | [Github](https://github.com/gcla/termshark) |
 
 ### Applications & others
 
@@ -56,8 +57,9 @@ Dot 👽 Dot 🦎
 | gimp                | Image editor | [Site](https://www.gimp.org/) |
 | godot               | Game engine | [Site](https://godotengine.org/) |
 | synfigstudio        | 2D Animation Software | [Site](https://www.synfig.org/) |
-| vlc | Media player  | [Gitlab](https://code.videolan.org/videolan/vlc) |
+| vlc                 | Media player  | [Gitlab](https://code.videolan.org/videolan/vlc) |
 | telegram-desktop    | Messaging app | [Github](https://github.com/telegramdesktop/tdesktop) |
+| wireshark           | Network traffic analyzer | [Github](https://github.com/wireshark/wireshark) |
 
 ```console
 $ sudo usermod -aG input,video,libvirt,docker,kvm $USER
@@ -96,3 +98,9 @@ $ sudo xbps-remove -Oo
 | YAML                | redhat.vscode-yaml                 |
 | Material Icon Theme | pkief.material-icon-theme          |
 | Mayukai Theme       | gulajavaministudio.mayukaithemevsc |
+
+<style>
+table {
+	width:100%;
+}
+</style>
