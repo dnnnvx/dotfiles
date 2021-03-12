@@ -28,41 +28,42 @@ Dot 👽 Dot 🦎
 
 | Package Name | Description | Link   |
 |--------------|-------------|--------|
-| ncdu | Disk utilty | [Site](https://dev.yorhel.nl/ncdu) |
-| bat | Cat alternative | [Github](https://github.com/sharkdp/bat) |
-| hexyl | TUI binary viewer | [Github](https://github.com/sharkdp/hexyl) |
-| hyperfine | Command-line benchmarking tool | [Github](https://github.com/sharkdp/hyperfine) |
-| shellcheck | Static analysis tool for shell scripts | [Github](https://github.com/koalaman/shellcheck) |
-| p7zip | Command line version of 7zip | [Sourceforge](https://sourceforge.net/projects/p7zip/) |
-| tig | Text-mode interface for git | [Sourceforge](https://github.com/jonas/tig) |
-| parted | Manipulate partition tables | [Site](https://savannah.gnu.org/git/?group=parted) |
-| aws-cli | Command Line Interface for AWS | [Github](https://github.com/aws/aws-cli) |
-| vpm | package management helper for Void Linux | [Github](https://github.com/netzverweigerer/vpm) |
+| ncdu         | Disk utilty | [Site](https://dev.yorhel.nl/ncdu) |
+| bat          | Cat alternative | [Github](https://github.com/sharkdp/bat) |
+| hexyl        | TUI binary viewer | [Github](https://github.com/sharkdp/hexyl) |
+| hyperfine    | Command-line benchmarking tool | [Github](https://github.com/sharkdp/hyperfine) |
+| shellcheck   | Static analysis tool for shell scripts | [Github](https://github.com/koalaman/shellcheck) |
+| p7zip        | Command line version of 7zip | [Sourceforge](https://sourceforge.net/projects/p7zip/) |
+| tig          | Text-mode interface for git | [Sourceforge](https://github.com/jonas/tig) |
+| parted       | Manipulate partition tables | [Site](https://savannah.gnu.org/git/?group=parted) |
+| aws-cli      | Command Line Interface for AWS | [Github](https://github.com/aws/aws-cli) |
+| vpm          | package management helper for Void Linux | [Github](https://github.com/netzverweigerer/vpm) |
 
 ### Applications & others
 
-| Package Name | Description | Link   |
-|--------------|-------------|--------|
-| dejavu-fonts-ttf | Dejavu font | [Site](https://dejavu-fonts.github.io/) |
-| noto-fonts-ttf   | Noto font | [Site](https://www.google.com/get/noto/) |
-| noto-fonts-emoji | Noto emoji font | [Site](https://www.google.com/get/noto/) |
-| fontconfig       | Font configuration and customization | [Gitlab](https://gitlab.freedesktop.org/fontconfig/fontconfig) |
-| chromium | Chromium web browser | [Site](https://www.chromium.org/Home) |
-| firefox | Firefox web browser | [Site](https://www.mozilla.org/en-US/firefox/new/) |
-| vscode | VS Code without branding/telemetry/licensing | [Github](https://github.com/VSCodium/vscodium) |
-| lmms | Music production software | [Github](https://github.com/LMMS/lmms) |
-| obs | Live streaming and screen recording | [Github](https://github.com/obsproject/obs-studio) |
-| blender | 3D creation suite | [Github](https://github.com/blender/blender) |
-| gimp | Image editor | [Site](https://www.gimp.org/) |
-| godot | Game engine | [Site](https://godotengine.org/) |
-| synfigstudio | 2D Animation Software | [Site](https://www.synfig.org/) |
-| vlc | Media player | [Gitlab](https://code.videolan.org/videolan/vlc) |
-| telegram-desktop | Messaging app | [Github](https://github.com/telegramdesktop/tdesktop) |
+| Package Name        | Description | Link   |
+|---------------------|-------------|--------|
+| dejavu-fonts-ttf    | Dejavu font | [Site](https://dejavu-fonts.github.io/) |
+| noto-fonts-ttf      | Noto font | [Site](https://www.google.com/get/noto/) |
+| noto-fonts-emoji    | Noto emoji font | [Site](https://www.google.com/get/noto/) |
+| fontconfig          | Font configuration and customization | [Gitlab](https://gitlab.freedesktop.org/fontconfig/fontconfig) |
+| chromium            | Chromium web browser | [Site](https://www.chromium.org/Home) |
+| firefox             | Firefox web browser | [Site](https://www.mozilla.org/en-US/firefox/new/) |
+| vscode              | VS Code without branding/telemetry/licensing | [Github](https://github.com/VSCodium/vscodium) |
+| lmms                | Music production software | [Github](https://github.com/LMMS/lmms) |
+| obs                 | Live streaming and screen recording | [Github](https://github.com/obsproject/obs-studio) |
+| blender             | 3D creation suite | [Github](https://github.com/blender/blender) |
+| gimp                | Image editor | [Site](https://www.gimp.org/) |
+| godot               | Game engine | [Site](https://godotengine.org/) |
+| synfigstudio        | 2D Animation Software | [Site](https://www.synfig.org/) |
+| vlc | Media player  | [Gitlab](https://code.videolan.org/videolan/vlc) |
+| telegram-desktop    | Messaging app | [Github](https://github.com/telegramdesktop/tdesktop) |
 
 ```console
 $ sudo usermod -aG input,video,libvirt,docker,kvm $USER
 $ sudo xbps-remove -Oo
 ```
+
 ## Other installations
 
 | Tool                       | Description | Link   |
@@ -78,3 +79,20 @@ $ sudo xbps-remove -Oo
 | JetBrains Mono Font        | JetBrains font| [Site](https://www.jetbrains.com/lp/mono/) |
 | Iosevka Font (SS12)        | Iosevka font | [Github](https://github.com/be5invis/Iosevka/releases) |
 | Atkinson Hyperlegible Font | Atkinson font | [Site](https://fontesk.com/atkinson-hyperlegible-font/) |
+
+## VS Code plugins
+
+| Name                | Extension ID                       |
+|---------------------|------------------------------------|
+| Go                  | golang.go                          |
+| GraphQL             | graphql.vscode-graphql             |
+| Dart                | dart-code.dart-code                |
+| Flutter             | dart-code.flutter                  |
+| Flutter             | dart-code.flutter                  |
+| webhint             | webhint.vscode-webhint             |
+| ESLint              | dbaeumer.vscode-eslint             |
+| stylelint           | stylelint.vscode-stylelint         |
+| Svelte              | svelte.svelte-vscode               |
+| YAML                | redhat.vscode-yaml                 |
+| Material Icon Theme | pkief.material-icon-theme          |
+| Mayukai Theme       | gulajavaministudio.mayukaithemevsc |
