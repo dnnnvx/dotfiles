@@ -1,11 +1,18 @@
-### Some custom resource
+# Some personale notes - resources
+| Notes                                                        | Description |                                           External Links                                |
+|--------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------|
+| [Void Setup](./dotfiles)                                     | My setup (packages & dotfiles)                          |                                             |
+| [General Utilities](./docs/utils.md)                         | Logging, hardening & more                               |                                             |
+| [Kubernetes Void Setup](./docs/k8s.md)                       | Spoiler: I've given up... for now                       |                                             |
+| [Raspberry Pi Void Setup](./docs/rpi.md)                     | I just love Void Linux, that's all                      | [Installation Page](https://docs.voidlinux.org/installation/guides/arm-devices/platforms.html?highlight=raspberry#raspberry-pi) |
+| [Tmux guide](./docs/tmux.md)                                 | No more 12 ssh connections to the same host, I promise! | [devhint](https://devhints.io/tmux)         |
+| [Bash guide](./docs/bash.md)                                 | Even if I use Fish btw                                  | [Nice wiki](https://wiki.bash-hackers.org/), [devhint](https://devhints.io/bash) |
+| [Vim guide](./docs/vim.md)                                   | Life's too short to learn vim's shortcuts               | [cheatsheet](https://vim.rtorr.com/lang/it), [devhint](https://devhints.io/vim)  |
+| [Regex guide](./docs/regex.md)                               | Life's too short to learn regex too                     | [helper](https://ihateregex.io/)            |
+| [Jq guide](./docs/jq.md)                                     | Comand line json processor                              | [Github](https://github.com/stedolan/jq)    |
 
-- [Void Desktop Setup + dotfiles](./dotfiles)
-- [Kubernetes Void Setup (spoiler: I give up)](./docs/k8s.md)
-- [Raspberry Pi Void Setup](./docs/rpi.md)
-- [General Utilities (logging, hardening)](./docs/utils.md)
-- [Basic vim guide](./docs/vim.md)
-- [Basic tmux guide](./docs/tmux.md)
-- [Basic bash guide](./docs/bash.md)
-- [Basic regex guide](./docs/regex.md)
-- [Basic jq guide](./docs/jq.md)
+<style>
+table {
+	width:100%;
+}
+</style>
