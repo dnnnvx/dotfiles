@@ -133,9 +133,3 @@ $ sudo xbps-remove -Oo
 | Mayukai Theme       | gulajavaministudio.mayukaithemevsc |
 | docker              | ms-azuretools.vscode-docker        |
 | hadolint            | exiasr.hadolint                    |
-
-<style>
-table {
-	width:100%;
-}
-</style>

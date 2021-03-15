@@ -1,4 +1,5 @@
 # Some personale notes - resources
+
 | Notes                                                        | Description |                                           External Links                                |
 |--------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------|
 | [Void Setup](./dotfiles)                                     | My setup (packages & dotfiles)                          |                                             |
@@ -10,9 +11,3 @@
 | [Vim guide](./docs/vim.md)                                   | Life's too short to learn vim's shortcuts               | [cheatsheet](https://vim.rtorr.com/lang/it), [devhint](https://devhints.io/vim)  |
 | [Regex guide](./docs/regex.md)                               | Life's too short to learn regex too                     | [helper](https://ihateregex.io/)            |
 | [Jq guide](./docs/jq.md)                                     | Comand line json processor                              | [Github](https://github.com/stedolan/jq)    |
-
-<style>
-table {
-	width:100%;
-}
-</style>
