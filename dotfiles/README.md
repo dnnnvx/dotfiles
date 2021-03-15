@@ -106,11 +106,15 @@ $ sudo xbps-remove -Oo
 
 ## Brew installations
 
-| Package Name | Description                          | Link                                           |
-|--------------|--------------------------------------|------------------------------------------------|
-| hadolint     | Dockerfile linter                    | [Github](https://github.com/hadolint/hadolint) |
-| kubespy      | Observing k8s resources in real time | [Github](https://github.com/pulumi/kubespy)    |
-| k9s          | Kubernetes CLI/TUI management        | [Github](https://github.com/derailed/k9s)      |
+| Package Name        | Description                          | Link                                             |
+|---------------------|--------------------------------------|--------------------------------------------------|
+| minikube            | Kubernetes on Docker                 | [Github](https://github.com/kubernetes/minikube) |
+| octant              | Kubernetes Web UI                    | [Github](https://github.com/vmware-tanzu/octant) |
+| go-task/tap/go-task | Task runner (make alternative)       | [Github](https://github.com/vmware-tanzu/octant) |
+| hadolint            | Dockerfile linter                    | [Github](https://github.com/hadolint/hadolint)   |
+| kubespy             | Observing k8s resources in real time | [Github](https://github.com/pulumi/kubespy)      |
+| k9s                 | Kubernetes CLI/TUI management        | [Github](https://github.com/derailed/k9s)        |
+| aws-sam-cli         | AWS Serverless CLI                   | [Github](https://github.com/aws/aws-sam-cli)     |
 
 ## VS Code plugins
 
