@@ -420,8 +420,83 @@ telnet www.mycool.site 80
 nmap -sS -p 80 www.mycool.site
 ```
 
-## Ufw & AppArmor
+## Kernel mitigation
+
+Check your system to see what CPU vulnerabilities exist and what mitigations are currently in place:
+```
+tail -n +1 /sys/devices/system/cpu/vulnerabilities/*
+```
+
+## Ufw
+UFW (Uncomplicated Firewall) uses a simple, command-line interface for iptables configuration.
 
 ```sh
-$ sudo xbps-install -S ufw apparmor
+sudo xbps-install -S ufw
+sudo ufw enable                 # enable ufw
+sudo ufw default deny incoming  # block all incoming traffic
+sudo ufw default deny outgoing  # block all outgoing traffic
+
+sudo ufw allow out 53           # port for dns
+sudo ufw allow out 80,443/tcp   # ports for http/s
+sudo ufw allow out 67,68/udp    # ports for dhcp (same as 67:68 for range ports)
+sudo ufw allow out 123/udp      # port for network time (note: NTP isn't a secure protocol)
+sudo ufw allow out 1194/udp     # port for vpn
+
+sudo ufw reset                  # reset conf if you have messed up everything :/
+```
+
+Ufw before.rules:
+```sh
+# disable ping response in ufw before.rules
+sudo sed -i '/ufw-before-input.*icmp/s/ACCEPT/DROP/g' /etc/ufw/before.rules
+# enable outgoing ping requests
+sudo sed -i '/be processed/s/^/# allow icmp out\n-A ufw-before-output -p icmp -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT\n-A ufw-before-output -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT\n\n/' /etc/ufw/before.rules
+
+# The rules also allow multicast by default. If you don't use multicast and want
+# these ports closed, you can modify the rules by commenting them out.
+# This could also be helpful if you use a Chromium-based browser which tend to
+# send out unsolicited multicast packets on your local network.
+sudo sed -i '/1900/s/^/#/' /etc/ufw/before.rules # disable rule for port 1900
+sudo sed -i '/5353/s/^/#/' /etc/ufw/before.rules # disable rule for port 5353
+```
+
+Disable IPv6:
+```sh
+# Method 1
+sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="ipv6.disable=1 /g' /etc/default/grub
+sudo update-grub
+# Method 2
+sudo bash
+sudo echo "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
+sudo echo "net.ipv6.conf.default.disable_ipv6 = 1" >> /etc/sysctl.conf
+sudo echo "net.ipv6.conf.lo.disable_ipv6 = 1" >> /etc/sysctl.conf
+```
+
+## AppArmor
+AppArmor is a security module that restricts programs to a limited amount of resources. It's especially useful for software that may be targeted on the web, such as your browser or other networking software.
+```sh
+sudo xbps-install -S apparmor
+sudo aa-status                      # verify status
+sudo aa-enforce /etc/apparmor.d/*   # enable newly added profiles
+```
+
+#### (Debian/Ubuntu) unused services
+```sh
+sudo apt purge apport apport-symptoms whoopsie libwhoopsie0 popularity-contest # Ubuntu crash reporting and package statistics
+sudo apt purge avahi-autoipd avahi-daemon # multicast service
+sudo apt purge blueman bluez bluez-cups bluez-obexd pulseaudio-module-bluetooth # bluetooth service
+sudo apt purge gnome-software gnome-software-common # Ubuntu software manager (note: use synaptic as an alternative)
+sudo apt purge gvfs-backends libsmbclient libwbclient0 samba-libs # samba file sharing service
+sudo apt purge cups-browsed cups-bsd cups-client cups-common cups-daemon cups-ppdc cups-server-common # cups printing service
+```
+> Obviously, don't remove services like bluetooth, printing, etc., if you have a legitimate need for them.
+
+## Misc
+
+Disable SWAP:
+```sh
+sysctl vm.swappiness
+# And this command can disable it completely:
+sudo bash
+sudo echo "vm.swappiness=0" >> /etc/sysctl.conf
 ```
