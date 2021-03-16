@@ -39,6 +39,7 @@ Dot 👽 Dot 🦎
 | aws-cli      | Command Line Interface for AWS           | [Github](https://github.com/aws/aws-cli)               |
 | vpm          | package management helper for Void Linux | [Github](https://github.com/netzverweigerer/vpm)       |
 | termshark    | Terminal UI for tshark                   | [Github](https://github.com/gcla/termshark)            |
+| mkpasswd     | Password generator                       | [Page](https://linux.die.net/man/1/mkpasswd)           |
 
 ### Applications & others
 
@@ -59,10 +60,13 @@ Dot 👽 Dot 🦎
 | synfigstudio        | 2D Animation Software                        | [Site](https://www.synfig.org/)                                |
 | vlc                 | Media player                                 | [Gitlab](https://code.videolan.org/videolan/vlc)               |
 | telegram-desktop    | Messaging app                                | [Github](https://github.com/telegramdesktop/tdesktop)          |
+| paprefs             | Pulseaudio configs                           | [Site](https://freedesktop.org/software/pulseaudio/paprefs)    |
 | wireshark           | Network traffic analyzer                     | [Github](https://github.com/wireshark/wireshark)               |
 
+#### Add user to new groups and remove old packages
+
 ```console
-$ sudo usermod -aG input,video,libvirt,docker,kvm $USER
+$ sudo usermod -aG sudo,input,video,libvirt,docker,kvm $USER
 $ sudo xbps-remove -Oo
 ```
 
@@ -133,3 +137,53 @@ $ sudo xbps-remove -Oo
 | Mayukai Theme       | gulajavaministudio.mayukaithemevsc |
 | docker              | ms-azuretools.vscode-docker        |
 | hadolint            | exiasr.hadolint                    |
+
+
+## Audio
+
+- In `/home/user/.config/pulse/daemon.conf`:
+
+```sh
+avoid-resampling = true
+flat-volumes = no
+resample-method = speex-float-10
+avoid-resampling = yes
+## These next options should be tailored to your use case and hardware. I mainly play files in 44100 and 96000 bit rate through headphones.
+default-sample-format = float32le
+default-sample-rate = 44100
+alternate-sample-rate = 96000
+```
+
+### Autologin on startup
+See: [docs](https://wiki.voidlinux.org/Automatic_Login_to_Graphical_Environment)
+```sh
+$ sudo cp -R /etc/sv/agetty-tty1 /etc/sv/agetty-autologin-tty1
+$ sudo echo >> /etc/sv/agetty-autologin-tty1/conf "GETTY_ARGS=\"--autologin $USER --noclear\"
+  BAUD_RATE=38400
+  TERM_NAME=linux"
+```
+Logout, login, and:
+```sh
+$ sudo rm /var/service/agetty-tty1
+$ sudo ln -s /etc/sv/agetty-autologin-tty1 /var/service
+```
+
+### Auto xinit w/ fish
+In `~/.config/fish/config.fish`:
+```sh
+#set -l tty (fgconsole)
+if test -z $DISPLAY
+  #and [ tty = 1 ]
+  exec startx
+end
+```
+
+> In general, use `~/.config/fish/config.fish` for any ".profile" configuration
+
+### Create Pulseaudio module for OBS
+(Assume that with listing `short links` 3 is the null one and 2 is the default)
+```sh
+$ pactl load-module module-null-sink
+$ pactl list short sinks
+$ pactl load-module module-combine-sink sink_name=OBScombine slaves=3,2
+```
