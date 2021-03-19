@@ -110,15 +110,24 @@ $ sudo xbps-remove -Oo
 
 ## Brew installations
 
-| Package Name        | Description                          | Link                                             |
-|---------------------|--------------------------------------|--------------------------------------------------|
-| minikube            | Kubernetes on Docker                 | [Github](https://github.com/kubernetes/minikube) |
-| octant              | Kubernetes Web UI                    | [Github](https://github.com/vmware-tanzu/octant) |
-| go-task/tap/go-task | Task runner (make alternative)       | [Github](https://github.com/vmware-tanzu/octant) |
-| hadolint            | Dockerfile linter                    | [Github](https://github.com/hadolint/hadolint)   |
-| kubespy             | Observing k8s resources in real time | [Github](https://github.com/pulumi/kubespy)      |
-| k9s                 | Kubernetes CLI/TUI management        | [Github](https://github.com/derailed/k9s)        |
-| aws-sam-cli         | AWS Serverless CLI                   | [Github](https://github.com/aws/aws-sam-cli)     |
+| Package Name                | Description                          | Link                                                  |
+|-----------------------------|--------------------------------------|-------------------------------------------------------|
+| minikube                    | Local k8s                            | [Github](https://github.com/kubernetes/minikube)      |
+| octant                      | Kubernetes Web UI                    | [Github](https://github.com/vmware-tanzu/octant)      |
+| kubespy                     | Observing k8s resources in real time | [Github](https://github.com/pulumi/kubespy)           |
+| kind                        | K8s in docker                        | [Github](https://github.com/kubernetes-sigs/kind)     |
+| k9s                         | Kubernetes CLI/TUI management        | [Github](https://github.com/derailed/k9s)             |
+| FairwindsOps/tap/polaris    | K8s validations best practices       | [Github](https://github.com/FairwindsOps/polaris)     |
+| aquasecurity/trivy/trivy    | Vulnerability scanner                | [Github](https://github.com/aquasecurity/trivy)       |
+| lazydocker                  | Docker TUI management                | [Github](https://github.com/jesseduffield/lazydocker) |
+| hadolint                    | Dockerfile linter                    | [Github](https://github.com/hadolint/hadolint)        |
+| go-task/tap/go-task         | Task runner (make alternative)       | [Github](https://github.com/vmware-tanzu/octant)      |
+| aws-sam-cli                 | AWS Serverless CLI                   | [Github](https://github.com/aws/aws-sam-cli)          |
+| mitmproxy                   | Web Traffic inspector (TUI & Web UI) | [Github](https://github.com/mitmproxy/mitmproxy)      |
+| goaccess                    | Real-time web log analyzer           | [Github](https://github.com/allinurl/goaccess)        |
+| bettercap                   | Network/bluetooth log analyzer       | [Github](https://github.com/bettercap/bettercap)      |
+| pyroscope-io/brew/pyroscope | Continuous profiling platform        | [Github](https://github.com/pyroscope-io/pyroscope)   |
+| vegeta                      | HTTP load testing tool               | [Github](https://github.com/tsenart/vegeta)           |
 
 ## VS Code plugins
 
