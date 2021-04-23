@@ -1,21 +1,6 @@
 {
-    "workbench.iconTheme": "material-icon-theme",
-    "editor.cursorStyle": "block",
-    "editor.fontFamily": "'JetBrains Mono', Consolas, 'Courier New', monospace",
-    "editor.cursorBlinking": "solid",
-    "window.titleBarStyle": "native",
-    "editor.minimap.enabled": false,
-    "explorer.openEditors.visible": 0,
-    "explorer.autoReveal": false,
-    "editor.tabSize": 2,
-    "editor.insertSpaces": false,
-    "window.zoomLevel": 0,
-    "editor.suggestSelection": "first",
-    "files.watcherExclude": {
-        "**/.git/objects/**": true,
-        "**/.git/subtree-cache/**": true,
-        "**/node_modules/*/**": true
-    },
+    "workbench.colorTheme": "GitHub Dark",
+    "workbench.iconTheme": "vscode-great-icons",
     "workbench.startupEditor": "welcomePage",
     "files.exclude": {
         "**/.classpath": true,
@@ -23,15 +8,31 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
+    "editor.cursorStyle": "block",
+    "editor.fontFamily": "'JetBrains Mono', Consolas, 'Courier New', monospace",
+    "editor.cursorBlinking": "solid",
+    "editor.minimap.enabled": false,
+    "editor.tabSize": 2,
     "editor.fontLigatures": true,
-    "dart.flutterSdkPath": "/usr/local/lib/flutter",
     "editor.fontSize": 12,
+    "editor.insertSpaces": false,
+    "explorer.openEditors.visible": 0,
+    "explorer.autoReveal": false,
+    "window.zoomLevel": 0,
+    "window.titleBarStyle": "native",
+    "editor.suggestSelection": "first",
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true
+    },
     "debug.console.fontSize": 12,
     "markdown.preview.fontSize": 12,
     "terminal.integrated.fontSize": 12,
+    "terminal.integrated.shell.osx": "/opt/Homebrew/bin/fish",
     "go.formatTool": "goimports",
-    "go.useLanguageServer": true,
-    "workbench.colorTheme": "Field Lights",
-    "timeline.showView": true,
-    "diffEditor.ignoreTrimWhitespace": false
+    // "diffEditor.ignoreTrimWhitespace": false,
+    "dart.flutterSdkPath": "/usr/local/lib/flutter",
+    "webhint.enableTelemetry": "disabled",
+    "terminal.explorerKind": "external"
 }

@@ -86,25 +86,8 @@ $ sudo xbps-remove -Oo
 | duf                        | Disk utility                        | [Github](https://github.com/muesli/duf)                    |
 | fzf                        | Fuzzy finder                        | [Github](https://github.com/junegunn/fzf)                  |
 | JetBrains Mono Font        | JetBrains font                      | [Site](https://www.jetbrains.com/lp/mono/)                 |
-| Iosevka Font (SS12)        | Iosevka font                        | [Github](https://github.com/be5invis/Iosevka/releases)     |
-| Atkinson Hyperlegible Font | Atkinson font                       | [Site](https://fontesk.com/atkinson-hyperlegible-font/)    |
-
-## Other installations
-
-| Tool                       | Description                         | Link                                                       |
-|----------------------------|-------------------------------------|------------------------------------------------------------|
-| Go                         | The Go programming lnguage          | [Site](https://golang.org/dl/)                             |
-| Brew                       | Brew package manager                | [Site](https://brew.sh/)                                   |
-| Dart / Flutter             | Dart language and Flutter framework | [Site](https://flutter.dev/docs/get-started/install/linux) |
-| Android Studio             | IDE                                 | [Site](https://developer.android.com/studio)               |
-| Gitg                       | Gnome gui client git repositories   | [Site](https://wiki.gnome.org/Apps/Gitg/)                  |
-| Ghex                       | Gnome hex editor                    | [Site](https://wiki.gnome.org/Apps/Ghex)                   |
-| Vital Audio                | Spectral warping wavetable synth    | [Site](https://vital.audio/)                               |
-| Fisher                     | Fish shell plugins                  | [Github](https://github.com/jorgebucaran/fisher)           |
-| Fish-nvm                   | Node version manager                | [Github](https://github.com/jorgebucaran/fish-nvm)         |
-| duf                        | Disk utility                        | [Github](https://github.com/muesli/duf)                    |
-| fzf                        | Fuzzy finder                        | [Github](https://github.com/junegunn/fzf)                  |
-| JetBrains Mono Font        | JetBrains font                      | [Site](https://www.jetbrains.com/lp/mono/)                 |
+| Fira Code Mono (Nerd)      | Fira font (nerdfont version)        | [Site](https://www.nerdfonts.com/font-downloads)           |
+| Go Mono (Nerd)             | Go font (nerdfont version)          | [Site](https://www.nerdfonts.com/font-downloads)           |
 | Iosevka Font (SS12)        | Iosevka font                        | [Github](https://github.com/be5invis/Iosevka/releases)     |
 | Atkinson Hyperlegible Font | Atkinson font                       | [Site](https://fontesk.com/atkinson-hyperlegible-font/)    |
 
@@ -128,25 +111,29 @@ $ sudo xbps-remove -Oo
 | bettercap                   | Network/bluetooth log analyzer       | [Github](https://github.com/bettercap/bettercap)      |
 | pyroscope-io/brew/pyroscope | Continuous profiling platform        | [Github](https://github.com/pyroscope-io/pyroscope)   |
 | vegeta                      | HTTP load testing tool               | [Github](https://github.com/tsenart/vegeta)           |
+| mkcert                      | Make local trusted dev certs         | [Github](https://github.com/FiloSottile/mkcert)       |
+| starship                    | Cool shell dev prompts               | [Github](https://github.com/starship/starship)        |
 
 ## VS Code plugins
 
-| Name                | Extension ID                       |
-|---------------------|------------------------------------|
-| Go                  | golang.go                          |
-| GraphQL             | graphql.vscode-graphql             |
-| Dart                | dart-code.dart-code                |
-| Flutter             | dart-code.flutter                  |
-| webhint             | webhint.vscode-webhint             |
-| ESLint              | dbaeumer.vscode-eslint             |
-| stylelint           | stylelint.vscode-stylelint         |
-| Svelte              | svelte.svelte-vscode               |
-| YAML                | redhat.vscode-yaml                 |
-| Material Icon Theme | pkief.material-icon-theme          |
-| Mayukai Theme       | gulajavaministudio.mayukaithemevsc |
-| docker              | ms-azuretools.vscode-docker        |
-| hadolint            | exiasr.hadolint                    |
-
+| Name                     | Extension ID                                |
+|--------------------------|---------------------------------------------|
+| Go                       | golang.go                                   |
+| GraphQL                  | graphql.vscode-graphql                      |
+| Dart                     | dart-code.dart-code                         |
+| Flutter                  | dart-code.flutter                           |
+| webhint                  | webhint.vscode-webhint                      |
+| ESLint                   | dbaeumer.vscode-eslint                      |
+| stylelint                | stylelint.vscode-stylelint                  |
+| Svelte                   | svelte.svelte-vscode                        |
+| YAML                     | redhat.vscode-yaml                          |
+| docker                   | ms-azuretools.vscode-docker                 |
+| VSCode Great Icons       | emmanuelbeziat.vscode-great-icons           |
+| Kubernetes               | ms-kubernetes-tools.vscode-kubernetes-tools |
+| hadolint                 | exiasr.hadolint                             |
+| GitHub heme              | github.github-vscode-theme                  |
+| Ruby Solargrpah          | castwide.solargraph                         |
+| vscode-styled-components | jpoissonnier.vscode-styled-components       |
 
 ## Audio
 
