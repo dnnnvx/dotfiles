@@ -11,3 +11,4 @@
 | [Vim guide](./docs/vim.md)                                   | Life's too short to learn vim's shortcuts               | [cheatsheet](https://vim.rtorr.com/lang/it), [devhint](https://devhints.io/vim)  |
 | [Regex guide](./docs/regex.md)                               | Life's too short to learn regex too                     | [helper](https://ihateregex.io/)            |
 | [Jq guide](./docs/jq.md)                                     | Comand line json processor                              | [Github](https://github.com/stedolan/jq)    |
+| [Helm guide](./docs/helm.md)                                     | Kubernetes charts                                       | [Github](https://github.com/helm/helm)    |
