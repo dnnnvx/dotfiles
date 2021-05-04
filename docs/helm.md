@@ -54,11 +54,11 @@ outer
   inner: value
 names:
   - a
-	- b
-	- c
+  - b
+  - c
 servers:
   - port: 80
-	host: sample
+    host: sample
 escaped: "a,b"
 ```
 
