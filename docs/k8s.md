@@ -1,8 +1,8 @@
 # Kubernetes on Void Linux
 
 - Cidr: `192.168.1.0/24`
-- Master node: `192.168.1.150`
-- Worker node: `192.168.1.151`
+- Master node: `192.168.1.101`
+- Worker node: `192.168.1.102`
 
 #### Requirements (master & worker)
 
@@ -22,7 +22,7 @@ Also make sure to have these variables in every node:
 # cat >> /etc/profile <<EOL
 KUBECONFIG=/etc/kubernetes/admin.conf
 KUBERNETES_SERVICE_PORT=443
-KUBERNETES_SERVICE_HOST=192.168.1.150
+KUBERNETES_SERVICE_HOST=192.168.1.101
 EOL
 ```
 
@@ -90,8 +90,8 @@ $ cd ~ && rm -r .kube/
 Install the same requirements as the master node, and join the cluster with the given token/certs:
 
 ```console
-$ KUBERNETES_SERVICE_PORT=443 && KUBERNETES_SERVICE_HOST=192.168.1.150
-$ kubeadm join 192.168.1.150:6443 --token <TOKEN> --discovery-token-ca-cert-hash <HASH>
+$ KUBERNETES_SERVICE_PORT=443 && KUBERNETES_SERVICE_HOST=192.168.1.101
+$ kubeadm join 192.168.1.101:6443 --token <TOKEN> --discovery-token-ca-cert-hash <HASH>
 ```
 
 Remember to stop and init manually the `kubelet` like in the master node.
@@ -152,71 +152,112 @@ $ sudo helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 - [Cadvisor](https://github.com/google/cadvisor): get usage and performance characteristics of running containers.
 - [Kustomize](https://kubernetes-sigs.github.io/kustomize/guides/offtheshelf/) + [Kpt](https://googlecontainertools.github.io/kpt/guides/ecosystem/): configurations management.
 
-# Kubernetes with Debian 10 (from mini.iso)
+# Kubernetes with Debian 10 (from mini.iso) on Intel NUC (5005) with Containerd instead of Docker
 
-```console
-$ sudo vim /etc/apt/sources.list # add non-free
-$ sudo apt update && sudo apt upgrade
-$ sudo apt install vim git htop firmware-iwlwifi firmware-realtek
-$ sudo modprobe -r iwlwifi ; sudo modprobe iwlwifi
-$ su -l -c "<SSID> <PWD>" > /etc/wpa_supplicant/wpa_supplicant.conf
-$ sudo systemctl reenable wpa_supplicant.service
-$ sudo systemctl restart wpa_supplicant.service
-$ sudo vim /etc/network/interfaces
-$ ifup wlo2
-$ ifdown eno1
-$ alias sctl="sudo systemctl"
-$ sudo swapoff -a
-$ sudo modprobe br_netfilter
-$ cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+```sh
+# add non-free firmware
+vim /etc/apt/sources.list # add non-free
+apt update && sudo apt upgrade
+apt install vim git htop firmware-iwlwifi firmware-realtek
+modprobe -r iwlwifi ; sudo modprobe iwlwifi
+
+# enable wifi
+su -l -c "<SSID> <PWD>" > /etc/wpa_supplicant/wpa_supplicant.conf
+systemctl reenable wpa_supplicant.service
+systemctl restart wpa_supplicant.service
+vim /etc/network/interfaces
+ifup wlo2
+ifdown eno1
+
+# disable swap (for persistence comment the swap line in /etc/fstab)
+swapoff -a
+
+# enable modules for bridge network
+modprobe br_netfilter
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
-$ sudo sysctl --system
-$ sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-$ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-$ sudo apt update
-$ sudo apt install docker-ce docker-ce-cli containerd.io
-$ sudo apt update && sudo apt-get install -y apt-transport-https curl
-$ sudo update-alternatives --config iptables
-$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-$ cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sysctl --system
+
+# install dependencies and containerd
+apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+apt update
+apt install containerd
+apt update && sudo apt-get install -y apt-transport-https curl
+update-alternatives --config iptables
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
-$ cat > /etc/docker/daemon.json <<EOF
-{
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "100m"
-  },
-  "storage-driver": "overlay2"
-}
+apt update && sudo apt install -y kubelet kubeadm kubectl
+
+# generate config file
+containerd config default > /etc/containerd/config.toml
+vim /etc/containerd/config.toml # enable systemd cgroup editing the corresponding line
+
+# create a symlink, it seems that kubelet needs it in /usr/local/bin/
+ln -s /usr/bin/containerd-shim-runc-v2 /usr/local/bin/
+systemctl enable containerd
+systemctl restart containerd
+systemctl enable kubelet
+systemctl restart kubelet
+apt-mark hold kubelet kubeadm kubectl
+
+# define kubeadm config
+cat <<EOF | sudo tee /etc/kubernetes/kubeadm-config.yaml
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta2
+kubernetesVersion: v1.21.0
+controlPlaneEndpoint: "nuc-101:6443"
+networking:
+  podSubnet: "192.168.1.0/24"
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
 EOF
-$ sctl restart docker
-$ sudo apt update && sudo apt install -y kubelet kubeadm kubectl
-$ sctl enable kubelet
-$ sudo apt-mark hold kubelet kubeadm kubectl
-$ export KUBELET_CONFIG_ARGS=--network-plugin=cni
-$ export KUBERNETES_SERVICE_HOST=192.168.1.101
-$ export KUBE_CONTROLLER_MANAGER_ARGS=--allocate-node-cidrs
-$ sudo kubeadm init --pod-network-cidr=192.168.1.0/24
-$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
-$ mount | grep /sys/fs/bpf
-$ kubectl taint nodes --all node-role.kubernetes.io/master-
-$ kubectl taint nodes --all node.kubernetes.io/not-ready:NoSchedule-
-$ kubectl create -f https://raw.githubusercontent.com/cilium/cilium/v1.8/install/kubernetes/quick-install.yaml
-$ kubectl create -f https://github.com/kubeless/kubeless/releases/download/v1.0.7/kubeless-v1.0.7.yaml
-$ kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-dashboard | awk '{print $1}')
-$ sudo apt install open-iscsi
-$ git clone https://github.com/longhorn/longhorn
-$ kubectl create namespace longhorn-system
-$ helm install longhorn ./longhorn/chart/ --namespace longhorn-system
-$ helm repo add minio https://helm.min.io/
-$ kubectl create namespace minio
-$ helm install --namespace minio --generate-name minio/minio
-$ kubectl create namespace drone
-$ helm install --namespace drone drone drone/drone -f drone-values.yaml
+
+# setup other kubeadm extra args (for containerd) used in systemd service file
+export KUBELET_EXTRA_ARGS="--container-runtime=remote --container-runtime-endpoint=unix:///run/containerd/containerd.sock --cgroup-driver=systemd"
+
+# create cluster
+kubeadm init --config /etc/kubernetes/kubeadm-config.yaml | tee kubeadm.out
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+
+# verify bpf is on
+mount | grep /sys/fs/bpf
+
+# install helm and cilium/hubble
+curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+apt install helm
+helm repo add cilium https://helm.cilium.io/
+helm install cilium cilium/cilium --version 1.9.7 --namespace cilium --set etcd.enabled=true --set etcd.managed=true --set etcd.k8sService=true
+helm upgrade cilium cilium/cilium --version 1.9.7 --namespace cilium --reuse-values --set hubble.listenAddress=":4244" \
+  --set hubble.relay.enabled=true --set hubble.ui.enabled=true
+
+  # install longhorn
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-dashboard | awk '{print $1}')
+apt install open-iscsi nfs-common jq
+
+# check longhorn dependencies and requirements
+curl -sSfL https://raw.githubusercontent.com/longhorn/longhorn/v1.1.1/scripts/environment_check.sh | bash
+helm repo add longhorn https://charts.longhorn.io
+helm repo update
+kubectl create namespace longhorn-system
+helm install longhorn longhorn/longhorn --namespace longhorn-system
+kubectl port-forward -n longhorn-system svc/longhorn-frontend 8001:80 # access the UI
+
+# install argocd
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+# to use the web UI from an external IP without port-forward (kubectl port-forward svc/argocd-server -n argocd 8080:443)
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+# download the cli and authenticate and add the cluster
+brew install argocd && argocd
+argocd cluster add --insecure <CLUSTER_NAME> # the same name as the ~/.kube/config cluster name
 ```
