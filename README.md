@@ -4,7 +4,7 @@
 |--------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------|
 | [Void Setup](./dotfiles)                                     | My setup (packages & dotfiles)                          |                                             |
 | [General Utilities](./docs/utils.md)                         | Logging, hardening & more                               |                                             |
-| [Kubernetes Void Setup](./docs/k8s.md)                       | Spoiler: I've given up... for now                       |                                             |
+| [Kubernetes Setup](./docs/k8s.md)                       | Debian 10, Intel NUC and Kubeadm     |                                             |
 | [Raspberry Pi Void Setup](./docs/rpi.md)                     | I just love Void Linux, that's all                      | [Installation Page](https://docs.voidlinux.org/installation/guides/arm-devices/platforms.html?highlight=raspberry#raspberry-pi) |
 | [Tmux guide](./docs/tmux.md)                                 | No more 12 ssh connections to the same host, I promise! | [devhint](https://devhints.io/tmux)         |
 | [Bash guide](./docs/bash.md)                                 | Even if I use Fish btw                                  | [Nice wiki](https://wiki.bash-hackers.org/), [devhint](https://devhints.io/bash) |
