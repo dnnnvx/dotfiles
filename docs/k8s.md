@@ -101,9 +101,13 @@ curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
 echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
 apt install helm
 helm repo add cilium https://helm.cilium.io/
-helm install cilium cilium/cilium --version 1.9.7 --namespace cilium --set etcd.enabled=true --set etcd.managed=true --set etcd.k8sService=true
-helm upgrade cilium cilium/cilium --version 1.9.7 --namespace cilium --reuse-values --set hubble.listenAddress=":4244" \
-  --set hubble.relay.enabled=true --set hubble.ui.enabled=true
+kubectl create ns cilium
+helm install cilium cilium/cilium --version 1.10.0 --namespace cilium
+helm upgrade cilium cilium/cilium --version 1.10.0 \
+  --namespace cilium \
+  --reuse-values \
+  --set hubble.relay.enabled=true \
+  --set hubble.ui.enabled=true
 ```
 
 ## Longhorn (persistence storage)
