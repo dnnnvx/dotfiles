@@ -133,9 +133,10 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 # to use the web UI from an external IP without port-forward (kubectl port-forward svc/argocd-server -n argocd 8080:443)
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-# download the cli and authenticate and add the cluster
+# Get the initial password
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+# download the cli and authenticate and add the cluster (optional)
 brew install argocd && argocd
-argocd cluster add --insecure <CLUSTER_NAME> # the same name as the ~/.kube/config cluster name
 ```
 
 ### Next steps:
