@@ -1,9 +1,9 @@
 # Kubernetes on Debian 10 (mini.iso) with Containerd
 
 - Two nodes (x2 Intel NUC with Pentium J5005, 8GB RAM, 120GB SSD)
-- Cidr: `192.168.1.0/24`
-- Control Plane: `192.168.1.101`
-- Worker node: `192.168.1.102`
+- Cidr: `192.168.0.0/16`
+- Control Plane: `192.168.0.100`
+- Worker node: `192.168.1.100`
 
 ## Preparation
 
@@ -70,7 +70,7 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kubernetesVersion: v1.21.0
 controlPlaneEndpoint: "nuc-101:6443"
 networking:
-  podSubnet: "192.168.1.0/24"
+  podSubnet: "192.168.0.0/16"
 ---
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
