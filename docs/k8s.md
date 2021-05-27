@@ -71,6 +71,9 @@ kubernetesVersion: v1.21.0
 controlPlaneEndpoint: "nuc-101:6443"
 networking:
   podSubnet: "192.168.0.0/16"
+apiServer:
+  extraArgs:
+    feature-gates: EphemeralContainers=true
 ---
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
