@@ -27,9 +27,10 @@ swapoff -a
 
 # enable modules for bridge network
 modprobe br_netfilter
-cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+net.ipv4.ip_forward = 1
+net.bridge.bridge-nf-call-iptables  = 1
 net.bridge.bridge-nf-call-ip6tables = 1
-net.bridge.bridge-nf-call-iptables = 1
 EOF
 sysctl --system
 ```
@@ -53,7 +54,7 @@ apt update && sudo apt install -y kubelet kubeadm kubectl
 
 # generate config file
 containerd config default > /etc/containerd/config.toml
-vim /etc/containerd/config.toml # enable systemd cgroup editing the corresponding line
+vim /etc/containerd/config.toml # add SystemdCgroup = true in [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
 
 # create a symlink, it seems that kubelet needs it in /usr/local/bin/
 ln -s /usr/bin/containerd-shim-runc-v2 /usr/local/bin/
@@ -67,7 +68,7 @@ apt-mark hold kubelet kubeadm kubectl
 cat <<EOF | sudo tee /etc/kubernetes/kubeadm-config.yaml
 kind: ClusterConfiguration
 apiVersion: kubeadm.k8s.io/v1beta2
-kubernetesVersion: v1.21.0
+kubernetesVersion: v1.22.3
 controlPlaneEndpoint: "nuc-101:6443"
 networking:
   podSubnet: "192.168.0.0/16"
@@ -91,6 +92,8 @@ export KUBELET_EXTRA_ARGS="--container-runtime=remote --container-runtime-endpoi
 kubeadm init --config /etc/kubernetes/kubeadm-config.yaml | tee kubeadm.out
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
+# to add nodes in the future: create a token and paste the command in the node cli
+kubeadm token create --print-join-command
 ```
 
 ## Cilium (CNI)
