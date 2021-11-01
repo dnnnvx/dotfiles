@@ -118,16 +118,9 @@ helm upgrade cilium cilium/cilium --version 1.10.0 \
 
 ## Longhorn (persistence storage)
 ```sh
-  # install longhorn
-kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-dashboard | awk '{print $1}')
-apt install open-iscsi nfs-common jq
-
-# check longhorn dependencies and requirements
-curl -sSfL https://raw.githubusercontent.com/longhorn/longhorn/v1.1.1/scripts/environment_check.sh | bash
-helm repo add longhorn https://charts.longhorn.io
-helm repo update
-kubectl create namespace longhorn-system
-helm install longhorn longhorn/longhorn --namespace longhorn-system
+apt install open-iscsi nfs-common jq # with the iscsid daemon running
+kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.2.2/deploy/longhorn.yaml
+kubectl get pods -n longhorn-system -w # watch finishing the installation
 kubectl port-forward -n longhorn-system svc/longhorn-frontend 8001:80 # access the UI
 ```
 
