@@ -96,27 +96,39 @@ chown $(id -u):$(id -g) $HOME/.kube/config
 kubeadm token create --print-join-command
 ```
 
-## Cilium (CNI)
+## Helm
+
+```sh
+# install helm and cilium/hubble
+curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+apt install helm
+```
+
+## Cilium as CNI ([docs](https://docs.cilium.io/en/stable/))
 
 ```sh
 # verify bpf is on
 mount | grep /sys/fs/bpf
 
 # install helm and cilium/hubble
-curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
-echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-apt install helm
 helm repo add cilium https://helm.cilium.io/
 kubectl create ns cilium
-helm install cilium cilium/cilium --version 1.10.0 --namespace cilium
-helm upgrade cilium cilium/cilium --version 1.10.0 \
+helm install cilium cilium/cilium --version 1.10.5 --namespace cilium
+helm upgrade cilium cilium/cilium --version 1.10.5 \
   --namespace cilium \
   --reuse-values \
   --set hubble.relay.enabled=true \
   --set hubble.ui.enabled=true
 ```
 
-## Longhorn (persistence storage)
+## Kube-Vip as in-cluster on-prem Load Balancer ([docs](https://kube-vip.io/usage/on-prem/))
+```sh
+kubectl apply -f https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml
+kubectl create configmap --namespace kube-system kubevip --from-literal cidr-global=192.168.0.0/16
+```
+
+## Longhorn (persistenceVolume PV and storageClass SC)
 ```sh
 apt install open-iscsi nfs-common jq # with the iscsid daemon running
 kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.2.2/deploy/longhorn.yaml
@@ -124,38 +136,47 @@ kubectl get pods -n longhorn-system -w # watch finishing the installation
 kubectl port-forward -n longhorn-system svc/longhorn-frontend 8001:80 # access the UI
 ```
 
-## Argo (GitOps)
-
+## Tekton
 ```sh
-# install argocd
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-# to use the web UI from an external IP without port-forward (kubectl port-forward svc/argocd-server -n argocd 8080:443)
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-# Get the initial password
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-# download the cli and authenticate and add the cluster (optional)
-brew install argocd && argocd
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+kubectl create configmap config-artifact-pvc \
+  --from-literal=size=10Gi \
+  --from-literal=storageClassName=longhorn \
+  -o yaml -n tekton-pipelines \
+  --dry-run=client | kubectl replace -f -
+# enable and access the the dashboard
+kubectl apply --filename https://github.com/tektoncd/dashboard/releases/latest/download/tekton-dashboard-release.yaml
+kubectl --namespace tekton-pipelines port-forward svc/tekton-dashboard 9097:9097
 ```
 
 ### Next steps:
 
-- Scylla
-- Cadvisor
-- Kaniko ([tips with Tekton](https://developer.ibm.com/devpractices/devops/tutorials/build-and-deploy-a-docker-image-on-kubernetes-using-tekton-pipelines/))
-- Kustomize
-- Keptn
-- Ko (Go on k8s)
-- Tekton
-- Knative
-- Kubeflow + Feast
+#### Development:
+- App development with Kustomize + Kpt (and Ko (Go on k8s))
+- Cadvisor for containers' usage and performance
 
-### Validation, authorization and security:
+#### CI/CD:
+- Flux
+- Kaniko for building container images on k8s ([tips with Tekton](https://developer.ibm.com/devpractices/devops/tutorials/build-and-deploy-a-docker-image-on-kubernetes-using-tekton-pipelines/))
 
-- RBAC
-- Open policy Agent
+#### DApp development:
+- [geth](https://artifacthub.io/packages/helm/vulcanlink/geth) nodes on k8s (manual [statefulSet](https://messari.io/article/running-an-ethereum-node-on-kubernetes-is-easy))
 
-- [Polaris](https://github.com/FairwindsOps/polaris): validation of best practices in your Kubernetes clusters.
+#### Storage:
+- [SeaweedFS](https://github.com/chrislusf/seaweedfs) with the [operator](https://github.com/seaweedfs/seaweedfs-operator) and [rclone](https://github.com/rclone/rclone) (alternative to Minio for S3 compatible API)
+
+#### Validation, authorization and security:
+- Kubernetes builtin RBAC
+- Open policy Agent with Rego Rules (or Kyverno)
+
+- [kubescape](https://github.com/armosec/kubescape): testing if Kubernetes is deployed securely according to DevSecOps best practices.
+- [polaris](https://github.com/FairwindsOps/polaris): validation of best practices in your Kubernetes clusters.
 - [kube-score](https://github.com/zegl/kube-score): object analysis with recommendations for improved reliability and security.
 - [kube-bench](https://github.com/aquasecurity/kube-bench): checks whether Kubernetes is deployed according to security best practices.
 - [kube-hunter](https://github.com/aquasecurity/kube-hunter): hunt for security weaknesses in Kubernetes clusters.
+
+#### Serverless:
+- Serverless Functions on k8s with [Knative](https://knative.dev/docs/)
+
+#### Additional features:
+- AI/ML with Kubeflow + Feast
