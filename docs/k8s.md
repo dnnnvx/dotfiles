@@ -161,6 +161,7 @@ kubectl --namespace tekton-pipelines port-forward svc/tekton-dashboard 9097:9097
 
 #### DApp development:
 - [geth](https://artifacthub.io/packages/helm/vulcanlink/geth) nodes on k8s (manual [statefulSet](https://messari.io/article/running-an-ethereum-node-on-kubernetes-is-easy))
+- [prysm](https://github.com/prysmaticlabs/prysm) as Ethereum L2 solution
 
 #### Storage:
 - [SeaweedFS](https://github.com/chrislusf/seaweedfs) with the [operator](https://github.com/seaweedfs/seaweedfs-operator) and [rclone](https://github.com/rclone/rclone) (alternative to Minio for S3 compatible API)
