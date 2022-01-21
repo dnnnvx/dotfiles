@@ -2,6 +2,12 @@
 
 Dot 👽 Dot 🦎
 
+## Next steps?
+
+- https://github.com/siduck/chadwm
+- https://github.com/NvChad/NvChad
+- https://github.com/elkowar/eww
+
 ## Packages
 
 > Update/upgrade all with `sudo xbps-install -Su`
